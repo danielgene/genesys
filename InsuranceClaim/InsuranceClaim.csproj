@@ -55,7 +55,7 @@
     </Reference>
     <Reference Include="Insurance.Domain, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Insurance.Domain.dll</HintPath>
+      <HintPath>..\Insurance.Domain\bin\Debug\Insurance.Domain.dll</HintPath>
     </Reference>
     <Reference Include="Insurance.Service, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -103,8 +103,7 @@
       <HintPath>..\packages\QRCoder.1.3.6\lib\net40\QRCoder.dll</HintPath>
     </Reference>
     <Reference Include="RestSharp, Version=106.3.1.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Bin\RestSharp.dll</HintPath>
+      <HintPath>..\packages\RestSharp.106.3.1\lib\net452\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -1201,6 +1200,7 @@
     <Content Include="Views\Report\ALMBranchReport.cshtml" />
     <Content Include="Views\Domestic\ThankYou.cshtml" />
     <Content Include="Views\Report\ALMGWPPartnerReport.cshtml" />
+    <Content Include="Views\CustomerRegistration\NewReceiptModule.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AgentLogo\" />

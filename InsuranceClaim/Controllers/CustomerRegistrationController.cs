@@ -14,7 +14,7 @@ using System.Globalization;
 using Insurance.Service;
 using System.Web.Configuration;
 using Newtonsoft.Json.Linq;
-using RestSharp;
+
 using Newtonsoft.Json;
 using System.Data.SqlClient;
 using System.IO;
@@ -4001,6 +4001,15 @@ namespace InsuranceClaim.Controllers
 
             return View();
         }
+
+        [Authorize(Roles = "Administrator,Finance")]
+        public ActionResult NewReceiptModule()
+        {
+            //var paymentMethod = InsuranceContext.PaymentMethods.All().ToList();
+            //ViewBag.PaymentMethod = paymentMethod;
+
+            return View("NewReceiptModule");
+        }
         [HttpPost]
         public JsonResult GetAutoSuggestions()
         {
@@ -4468,9 +4477,151 @@ namespace InsuranceClaim.Controllers
             InsuranceContext.PolicyDetails.Update(insure);
             return Json(Policy, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult paymentSend(string reference, string policyNumber, decimal amount, string currency, string paymentMethod, int userId, string type = "", string discription = "", string policyId = "0")
+        {
 
-        
+            PaymentResponse res = new PaymentResponse();
+            try
+            {
+                ReceiptAndPayment payment = new ReceiptAndPayment();
+                payment.Amount = amount;
+                payment.CreatedBy = userId;
+                payment.Description = discription;
+                payment.policyNumber = policyNumber;
+                payment.policyId = Convert.ToInt32(policyId);
+                payment.CreatedOn = DateTime.Now;
+                payment.currency = currency;
 
+                payment.type = type;
+                if (type.Length == 0)
+                {
+                    payment.type = "reciept";
+                }
+                payment.reference = reference;
+                payment.paymentMethod = paymentMethod;
+                InsuranceContext.ReceiptAndPayments.Insert(payment);
+                res.success = true;
+                res.message = "payment created";
+            }
+            catch (Exception ex)
+            {
+
+                res.success = false;
+                res.message = "payment created failed ";
+                res.error = ex.ToString();
+            }
+
+
+            return Json(res, JsonRequestBehavior.AllowGet);
+
+
+        }
+
+
+        public JsonResult getPayment(string policyNumber)
+        {
+
+            List<RecieptResponse> recieptResponses = new List<RecieptResponse>();
+            //InsuranceContext.ReceiptAndPayments.All().ToList();
+
+            recieptResponses = InsuranceContext.Query("select * from ReceiptAndPayment where type='reciept' and policyNumber='" + policyNumber + "'").Select(x => new RecieptResponse()
+            {
+                paymentMethod = x.paymentMethod,
+                Amount = x.Amount,
+                Id = x.Id,
+
+                policyNumber = x.policyNumber,
+                Description = x.Description,
+                reference = x.reference,
+                currency = x.currency,
+                CreatedOn = x.CreatedOn.ToString("yyyy-MM-dd HH:mm:ss.fff")
+
+            }).ToList();
+
+            return Json(recieptResponses, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult getBalance(string policyNumber)
+        {
+
+            AccountBalance accountBalance = new AccountBalance();
+            var balance = InsuranceContext.Query("select COALESCE(SUM(Amount),0) as balance from ReceiptAndPayment where type='invoice' and policyNumber='" + policyNumber + "'").Select(x =>
+             accountBalance.amountDue = x.balance * -1
+            ).FirstOrDefault();
+
+            var AmountDue = InsuranceContext.Query("select COALESCE(SUM(Amount),0) as balance from ReceiptAndPayment where policyNumber='" + policyNumber + "'").Select(x =>
+              accountBalance.balance = x.balance
+
+            ).FirstOrDefault();
+
+
+
+            return Json(accountBalance, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult getAutoCustomers(string searchString)
+        {
+
+            List<CustomerResponse> customers = new List<CustomerResponse>();
+            //InsuranceContext.ReceiptAndPayments.All().ToList();
+
+            string query = "select PolicyDetail.CreatedOn ,PolicyDetail.PolicyNumber,PolicyDetail.Id, Customer.FirstName , Customer.LastName , VehicleDetail.RegistrationNo from PolicyDetail ";
+            query += " join Customer on PolicyDetail.CustomerId = Customer.id";
+            query += " join VehicleDetail on PolicyDetail.Id = VehicleDetail.PolicyId";
+            query += " where PolicyNumber in(";
+            query += " select policyNumber from(SELECT policyNumber, SUM(Amount) as balance from ReceiptAndPayment group by policyNumber) as p where balance< 0)";
+            query += " and (policyNumber like '%" + searchString + "%' or Customer.LastName like '%" + searchString + "%'  or Customer.FirstName like '%" + searchString + "%' or VehicleDetail.RegistrationNo like '%" + searchString + "%')";
+
+            customers = InsuranceContext.Query(query).Select(x => new CustomerResponse()
+            {
+                CustomerName = x.FirstName + "  " + x.LastName,
+                vehicleRegNumber = x.RegistrationNo,
+                PolicyNumber = x.PolicyNumber,
+                policyId = x.Id
+
+            }).ToList();
+
+
+            return Json(customers, JsonRequestBehavior.AllowGet);
+        }
+
+        class CustomerResponse
+        {
+            public string CustomerName { set; get; }
+            public string vehicleRegNumber { set; get; }
+            public string PolicyNumber { set; get; }
+            public int policyId { set; get; }
+
+        }
+
+
+        class AccountBalance
+        {
+            public decimal balance { get; set; }
+            public decimal amountDue { get; set; }
+        }
+
+        class PaymentResponse
+        {
+            public bool success { get; set; }
+            public string message { get; set; }
+            public string error { get; set; }
+
+        }
+        class RecieptResponse
+        {
+            public int Id { get; set; } // Auto increment
+
+            public string reference { get; set; }
+            public string policyNumber { get; set; } // policy reference check as invoice
+
+            public string paymentMethod { get; set; }
+            public string Description { get; set; } // Description
+            public decimal Amount { get; set; } // Amount - or +
+            public string currency { get; set; } // currency options
+            public string CreatedOn { get; set; }
+
+
+        }
 
 
     }

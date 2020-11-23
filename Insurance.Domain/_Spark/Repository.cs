@@ -27,6 +27,9 @@ namespace Insurance.Domain
         static Db db = new InsuranceDb();
 
         // entity specific repositories
+
+        public static SystemUsers SystemUsers { get { return new SystemUsers(); } }
+        public static ReceiptAndPayments ReceiptAndPayments { get { return new ReceiptAndPayments(); } }
         public static string ConnectionString { get { return db.connectionString; } }
         public static Currencies Currencies { get { return new Currencies(); } }
         public static AgentCommissions AgentCommissions { get { return new AgentCommissions(); } }

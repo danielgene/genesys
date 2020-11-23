@@ -18,8 +18,9 @@ using QRCoder;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Net.Http;
-using RestSharp;
+
 using Newtonsoft.Json;
+using RestSharp;
 
 namespace InsuranceClaim.Controllers
 {
@@ -96,15 +97,16 @@ namespace InsuranceClaim.Controllers
 
             var re = response;
 
-          // var res = JsonConvert.DeserializeObject<SummaryDetailModel>(response.Content);
+            // var res = JsonConvert.DeserializeObject<SummaryDetailModel>(response.Content);
+
+           
 
 
+        }
 
-
-
-
-
-
+        private void saveRecieptAndPayment(ReceiptAndPayment receiptAndPayment)
+        {
+            InsuranceContext.ReceiptAndPayments.Insert(receiptAndPayment);
         }
 
 
@@ -1124,6 +1126,21 @@ namespace InsuranceClaim.Controllers
 
             VehicleService vehicleService = new VehicleService();
             vehicleService.SaveDeliveryAddress(detail);
+
+            ReceiptAndPayment payment = new ReceiptAndPayment();
+            payment.Amount = (summaryDetail.TotalPremium.Value * -1);
+            payment.CreatedBy = Convert.ToInt32(summaryDetail.CreatedBy);
+            payment.Description = "";
+            payment.policyNumber = policy.PolicyNumber;
+            payment.policyId = policy.Id;
+            payment.CreatedOn = DateTime.Now;
+            payment.currency = "--";
+            payment.type = "invoice";
+            payment.reference = "--";
+            payment.paymentMethod = "--";
+            //InsuranceContext.ReceiptAndPayments.Insert(payment);
+
+            saveRecieptAndPayment(payment);
 
 
 
