@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using AutoMapper;
+using Insurance.Domain;
 using InsuranceClaim.Models;
 using Microsoft.AspNet.Identity;
-using Insurance.Domain;
-using AutoMapper;
+using System;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace InsuranceClaim.Controllers
 {
@@ -17,7 +15,7 @@ namespace InsuranceClaim.Controllers
         {
             return View();
         }
-     
+
         public ActionResult AddSourceDetails()
         {
             ViewBag.BusinessSources = InsuranceContext.BusinessSources.All().ToList();
@@ -38,14 +36,15 @@ namespace InsuranceClaim.Controllers
                     var dbModel = Mapper.Map<SourceDetailModel, SourceDetail>(model);
                     dbModel.CreatedOn = DateTime.Now;
                     dbModel.CreatedBy = customer.Id;
-                    dbModel.BusinessId =Convert.ToInt32(model.Source);
+                    dbModel.BusinessId = Convert.ToInt32(model.Source);
                     dbModel.IsDeleted = true;
                     InsuranceContext.SourceDetails.Insert(dbModel);
                     return RedirectToAction("SourceDetailsList");
                 }
             }
 
-            else {
+            else
+            {
                 foreach (ModelState modelState in ViewData.ModelState.Values)
                 {
                     foreach (ModelError error in modelState.Errors)
@@ -59,21 +58,21 @@ namespace InsuranceClaim.Controllers
 
         public ActionResult SourceDetailsList()
         {
-                   var SourceDetailObjList = (from _Sd in InsuranceContext.SourceDetails.All().ToList()
-                                               join BS in InsuranceContext.BusinessSources.All().ToList()
-                                               on _Sd.BusinessId equals BS.Id
-                                               where _Sd.IsDeleted == true
-                                               select new SourceDetailModel
-                                               {
-                                                   Email = _Sd.Email,
-                                                   FullName = _Sd.FirstName + " " + _Sd.LastName,
-                                                   PhoneNumber = _Sd.PhoneNumber,
-                                                   Id = _Sd.Id,
-                                                   Address = _Sd.Address,
-                                                   SourceName = BS.Source
-                                               }
-                                   ).ToList().OrderByDescending(c => c.Id);
-                    return View(SourceDetailObjList);   
+            var SourceDetailObjList = (from _Sd in InsuranceContext.SourceDetails.All().ToList()
+                                       join BS in InsuranceContext.BusinessSources.All().ToList()
+                                       on _Sd.BusinessId equals BS.Id
+                                       where _Sd.IsDeleted == true
+                                       select new SourceDetailModel
+                                       {
+                                           Email = _Sd.Email,
+                                           FullName = _Sd.FirstName + " " + _Sd.LastName,
+                                           PhoneNumber = _Sd.PhoneNumber,
+                                           Id = _Sd.Id,
+                                           Address = _Sd.Address,
+                                           SourceName = BS.Source
+                                       }
+                            ).ToList().OrderByDescending(c => c.Id);
+            return View(SourceDetailObjList);
         }
 
         public ActionResult EditSourceDetail(int Id)
@@ -81,9 +80,9 @@ namespace InsuranceClaim.Controllers
             ViewBag.BusinessSources = InsuranceContext.BusinessSources.All().ToList();
             var record = InsuranceContext.SourceDetails.All(where: $"Id ={Id}").FirstOrDefault();
 
-            var model= Mapper.Map<SourceDetail , SourceDetailModel>(record);
+            var model = Mapper.Map<SourceDetail, SourceDetailModel>(record);
             model.BusinessId = record.BusinessId;
-            return View(model); 
+            return View(model);
         }
         [HttpPost]
         public ActionResult EditSourceDetail(SourceDetailModel model)
@@ -94,7 +93,7 @@ namespace InsuranceClaim.Controllers
                 var customer = InsuranceContext.Customers.Single(where: $"UserId ='{userid}'");
                 var data = Mapper.Map<SourceDetailModel, SourceDetail>(model);
                 data.ModifiedOn = DateTime.Now;
-                data.ModifiedBy = Convert.ToInt32(customer.Id);       
+                data.ModifiedBy = Convert.ToInt32(customer.Id);
                 data.IsDeleted = true;
                 InsuranceContext.SourceDetails.Update(data);
                 return RedirectToAction("SourceDetailsList");

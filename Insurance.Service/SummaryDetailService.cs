@@ -1,13 +1,10 @@
-﻿using System;
+﻿using Insurance.Domain;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Insurance.Domain;
-using AutoMapper;
-using System.IO;
-using System.Web;
 using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Web;
 
 namespace Insurance.Service
 {
@@ -110,7 +107,7 @@ namespace Insurance.Service
 
         }
 
-        public static void WriteLog(string request, string response, string method, string vrn="")
+        public static void WriteLog(string request, string response, string method, string vrn = "")
         {
             string message = string.Format(" Time: {0}", DateTime.Now);
             message += Environment.NewLine;

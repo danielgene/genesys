@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InsuranceClaim.Models
 {
     public class InsuranceAndLicenceDeliveryReportModel
     {
-       
+
         public string PaymentMethod { get; set; }
         public string TransactionReference { get; set; }
         public string CustomerName { get; set; }

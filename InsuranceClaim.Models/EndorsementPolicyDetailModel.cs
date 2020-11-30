@@ -1,24 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InsuranceClaim.Models
 {
-   public class EndorsementPolicyDetailModel
+    public class EndorsementPolicyDetailModel
     {
         public int Id { get; set; }
-        
+
         [Required(ErrorMessage = "Please Enter Policy Number.")]
         [MaxLength(25, ErrorMessage = "Policy number must be less than 25 characters long.")]
         public string PolicyNumber { get; set; }
         [Display(Name = "Insurer")]
         public int? InsurerId { get; set; }
-       
+
         public int PolicyStatusId { get; set; }
-       
+
         public int CurrencyId { get; set; }
         [Display(Name = "Start Date")]
         [Required(ErrorMessage = "Please Enter Policy Start Date")]

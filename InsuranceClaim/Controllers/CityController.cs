@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using Insurance.Domain;
+﻿using Insurance.Domain;
 using InsuranceClaim.Models;
+using System;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace InsuranceClaim.Controllers
 {
@@ -106,13 +104,13 @@ namespace InsuranceClaim.Controllers
 
                 if (cityDetails != null)
                 {
-                   
-                        if (!CheckCityExist(cityDetails.CityName, model.CityName))
-                        {
-                            TempData["errorMsg"] = "Make description already exist, please try again.";
-                            return View(model);
-                        }
-                    
+
+                    if (!CheckCityExist(cityDetails.CityName, model.CityName))
+                    {
+                        TempData["errorMsg"] = "Make description already exist, please try again.";
+                        return View(model);
+                    }
+
 
 
 

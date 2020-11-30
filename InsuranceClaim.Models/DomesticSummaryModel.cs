@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InsuranceClaim.Models
 {
-   
+
     public class DomesticSummaryModel
     {
         //public SummaryDetailModel()
@@ -23,7 +19,7 @@ namespace InsuranceClaim.Models
         public decimal? TotalCoverAmount { get; set; }
         public decimal? TotalPremium { get; set; }
         public decimal? TotalStampDuty { get; set; }
- 
+
         public string DebitNote { get; set; }
         public string ReceiptNumber { get; set; }
         public bool SMSConfirmation { get; set; }
@@ -45,7 +41,7 @@ namespace InsuranceClaim.Models
 
         // risk cover
         public string Error { get; set; }
-        
+
         public int CustomSumarryDetilId { get; set; }
         public string ProductName { get; set; }
         public string CoverName { get; set; }

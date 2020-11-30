@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InsuranceClaim.Models
 {
@@ -14,7 +10,7 @@ namespace InsuranceClaim.Models
 
         public Guid client_reference { get; set; }
 
-       // public string IceCashRequestUrl { get; set;  }
+        // public string IceCashRequestUrl { get; set;  }
 
         public string success_url { get; set; }
 

@@ -1,12 +1,8 @@
 ﻿using Insurance.Domain;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing;
 
 
 namespace Insurance.Service
@@ -42,12 +38,12 @@ namespace Insurance.Service
             {
                 InsuranceContext.PolicyDetails.Insert(policy);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
 
-           
+
         }
         public void UpdatePolicy(PolicyDetail policy)
         {
@@ -74,7 +70,7 @@ namespace Insurance.Service
         }
 
 
-    
+
     }
 
 

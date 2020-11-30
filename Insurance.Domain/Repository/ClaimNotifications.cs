@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Insurance.Domain
+﻿namespace Insurance.Domain
 {
- public partial class ClaimNotifications : Repository<ClaimNotification>
+    public partial class ClaimNotifications : Repository<ClaimNotification>
     {
     }
 }

@@ -309,7 +309,7 @@ namespace InsuranceClaim.Controllers
             model.RiskDetail.CurrencyId = 6; //default "RTGS$" select
             model.RiskDetail.NoOfCarsCovered = 1;
             model.RiskDetail.AgentCommissionId = 1;
-            
+
 
             List<RiskDetailModel> vehilceList = new List<RiskDetailModel>();
             vehilceList.Add(model.RiskDetail);
@@ -335,10 +335,10 @@ namespace InsuranceClaim.Controllers
                     if (item.RadioLicenseCost > 0)  // for now 
                         item.IncludeRadioLicenseCost = true;
 
-                    if(!string.IsNullOrEmpty(item.LicenseDeliveryWay))
+                    if (!string.IsNullOrEmpty(item.LicenseDeliveryWay))
                         item.IsLicenseDiskNeeded = true;
-                    
-                    
+
+
 
                     var _item = item;
 
@@ -697,7 +697,7 @@ namespace InsuranceClaim.Controllers
             model.DebitNote = "INV" + Convert.ToString(SummaryDetailServiceObj.getNewDebitNote());
 
             //default selection 
-            
+
             model.ReceiptNumber = "";
             model.SMSConfirmation = false;
             //model.TotalPremium = vehicle.Sum(item => item.Premium + item.ZTSCLevy + item.StampDuty + item.RadioLicenseCost);

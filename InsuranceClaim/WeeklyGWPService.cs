@@ -1,7 +1,5 @@
 ﻿using Insurance.Domain;
 using InsuranceClaim.Models;
-using iTextSharp.text.pdf.qrcode;
-using Newtonsoft.Json;
 using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
@@ -10,9 +8,7 @@ using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net.Http.Headers;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Insurance.Service
 {
@@ -51,38 +47,39 @@ namespace Insurance.Service
             Debug.WriteLine(yesterdayDate.ToString("MM/dd/yyyy"));
             Debug.WriteLine("***********************");
 
-            try { 
-            ListGrossWrittenPremiumReport = InsuranceContext.Query(query).
-                Select(x => new GrossWrittenPremiumReportModels()
-                {
-
-                    Policy_Number = x.Policy_Number,
-                    BranchName = x.BranchName,
-                    PolicyCreatedBy = x.PolicyCreatedBy,
-                    Customer_Name = x.Customer_Name,
-                    Transaction_date = x.Transaction_date.ToShortDateString(),
-                    CoverNoteNum = x.CoverNoteNum,
-                    Payment_Mode = x.Payment_Mode,
-                    Payment_Term = x.Payment_Term,
-                    CoverType = x.CoverType,
-                    Currency = x.Currency,
-                    Premium_due = x.Premium_due,
-                    Stamp_duty = x.Stamp_duty,
-                    ZTSC_Levy = x.ZTSC_Levy,
-                    ALMId = x.ALMId,
-                    Comission_Amount = x.Comission_Amount,
-                    RadioLicenseCost = x.RadioLicenseCost,
-                    Zinara_License_Fee = x.Zinara_License_Fee,
-                    PolicyRenewalDate = x.PolicyRenewalDate,
-                    IsActive = x.IsActive,
-                    RenewPolicyNumber = x.RenewPolicyNumber,
-                }).ToList();
-
-            List<BranchModel> obj = InsuranceContext.Query("select * from Branch where id != 6").Select(x => new BranchModel
+            try
             {
-                Id = x.Id,
-                BranchName = x.BranchName
-            }).ToList();
+                ListGrossWrittenPremiumReport = InsuranceContext.Query(query).
+                    Select(x => new GrossWrittenPremiumReportModels()
+                    {
+
+                        Policy_Number = x.Policy_Number,
+                        BranchName = x.BranchName,
+                        PolicyCreatedBy = x.PolicyCreatedBy,
+                        Customer_Name = x.Customer_Name,
+                        Transaction_date = x.Transaction_date.ToShortDateString(),
+                        CoverNoteNum = x.CoverNoteNum,
+                        Payment_Mode = x.Payment_Mode,
+                        Payment_Term = x.Payment_Term,
+                        CoverType = x.CoverType,
+                        Currency = x.Currency,
+                        Premium_due = x.Premium_due,
+                        Stamp_duty = x.Stamp_duty,
+                        ZTSC_Levy = x.ZTSC_Levy,
+                        ALMId = x.ALMId,
+                        Comission_Amount = x.Comission_Amount,
+                        RadioLicenseCost = x.RadioLicenseCost,
+                        Zinara_License_Fee = x.Zinara_License_Fee,
+                        PolicyRenewalDate = x.PolicyRenewalDate,
+                        IsActive = x.IsActive,
+                        RenewPolicyNumber = x.RenewPolicyNumber,
+                    }).ToList();
+
+                List<BranchModel> obj = InsuranceContext.Query("select * from Branch where id != 6").Select(x => new BranchModel
+                {
+                    Id = x.Id,
+                    BranchName = x.BranchName
+                }).ToList();
 
                 List<ZinaraReportModel> reportModelsList = new List<ZinaraReportModel>();
                 obj.ForEach(x =>
@@ -104,7 +101,7 @@ namespace Insurance.Service
             {
                 Debug.WriteLine(ex);
             }
-           
+
         }
 
         public DataTable ConvertToDataTable<T>(IList<T> data)
@@ -177,7 +174,7 @@ namespace Insurance.Service
                     Insurance.Service.EmailService objEmailService = new Insurance.Service.EmailService();
 
                     string email = System.Web.Configuration.WebConfigurationManager.AppSettings["gwpemail"];
-                    
+
                     objEmailService.SendAttachedEmail(email, "", "", "Zinara Report - " + DateTime.Now.ToShortDateString(), mailBody.ToString(), attachmentModels);
                 }
 
@@ -212,7 +209,7 @@ namespace Insurance.Service
         }
 
 
-        public void SendWeeklyReport() 
+        public void SendWeeklyReport()
         {
             var dtOneMonthBack = DateTime.Now;
 
@@ -265,73 +262,73 @@ namespace Insurance.Service
                 var report4 = getGWPData(fourthWeekStart, fourthWeekEnd);
                 var report5 = getGWPData(firstWeekStart, fourthWeekEnd);
 
-            List<BranchModel> branches = InsuranceContext.Query("select * from Branch").Select(x => new BranchModel
-            {
-                Id = x.Id,
-                BranchName = x.BranchName
-            }).ToList();
-
-            List<WeeklyGWPModel> weeklyGWPModels = new List<WeeklyGWPModel>();
-            branches.ForEach(x =>
-            {
-                WeeklyGWPModel model = new WeeklyGWPModel();
-                if (x.BranchName == "Online")
+                List<BranchModel> branches = InsuranceContext.Query("select * from Branch").Select(x => new BranchModel
                 {
-                    var count = ListGrossWrittenPremiumReport.FindAll(p => p.BranchName == x.BranchName || p.BranchName == "" || p.BranchName == null).Count();
-                    var total = ListGrossWrittenPremiumReport.Where(p => p.BranchName == x.BranchName || p.BranchName == "" || p.BranchName == null).Sum(item => item.Premium_due);
-                    var count2 = report2.FindAll(p => p.BranchName == x.BranchName || p.BranchName == "" || p.BranchName == null).Count();
-                    var total2 = report2.Where(p => p.BranchName == x.BranchName || p.BranchName == "" || p.BranchName == null).Sum(item => item.Premium_due);
-                    var count3 = report3.FindAll(p => p.BranchName == x.BranchName || p.BranchName == "" || p.BranchName == null).Count();
-                    var total3 = report3.Where(p => p.BranchName == x.BranchName || p.BranchName == "" || p.BranchName == null).Sum(item => item.Premium_due);
-                    var count4 = report4.FindAll(p => p.BranchName == x.BranchName || p.BranchName == "" || p.BranchName == null).Count();
-                    var total4 = report4.Where(p => p.BranchName == x.BranchName || p.BranchName == "" || p.BranchName == null).Sum(item => item.Premium_due);
-                    var count5 = report5.FindAll(p => p.BranchName == x.BranchName || p.BranchName == "" || p.BranchName == null).Count();
-                    var total5 = report5.Where(p => p.BranchName == x.BranchName || p.BranchName == "" || p.BranchName == null).Sum(item => item.Premium_due);
+                    Id = x.Id,
+                    BranchName = x.BranchName
+                }).ToList();
 
-                    model.BranchName = x.BranchName;
-                    model.FirstWeekCount = count;
-                    model.FirstWeekValue = total;
-                    model.SecondWeekCount = count2;
-                    model.SecondWeekValue = total2;
-                    model.ThirdWeekCount = count3;
-                    model.ThirdWeekValue = total3;
-                    model.FourWeekCount = count4;
-                    model.FourWeekValue = total4;
-                    model.TotalMonthCount = count5;
-                    model.TotalMonthValue = total5;
-                    weeklyGWPModels.Add(model);
-                }
-                else
+                List<WeeklyGWPModel> weeklyGWPModels = new List<WeeklyGWPModel>();
+                branches.ForEach(x =>
                 {
-                    var count = ListGrossWrittenPremiumReport.FindAll(p => p.BranchName == x.BranchName).Count();
-                    var total = ListGrossWrittenPremiumReport.Where(p => p.BranchName == x.BranchName).Sum(item => item.Premium_due);
-                    var count2 = report2.FindAll(p => p.BranchName == x.BranchName).Count();
-                    var total2 = report2.Where(p => p.BranchName == x.BranchName).Sum(item => item.Premium_due);
-                    var count3 = report3.FindAll(p => p.BranchName == x.BranchName).Count();
-                    var total3 = report3.Where(p => p.BranchName == x.BranchName).Sum(item => item.Premium_due);
-                    var count4 = report4.FindAll(p => p.BranchName == x.BranchName).Count();
-                    var total4 = report4.Where(p => p.BranchName == x.BranchName).Sum(item => item.Premium_due);
-                    var count5 = report5.FindAll(p => p.BranchName == x.BranchName).Count();
-                    var total5 = report5.Where(p => p.BranchName == x.BranchName).Sum(item => item.Premium_due);
+                    WeeklyGWPModel model = new WeeklyGWPModel();
+                    if (x.BranchName == "Online")
+                    {
+                        var count = ListGrossWrittenPremiumReport.FindAll(p => p.BranchName == x.BranchName || p.BranchName == "" || p.BranchName == null).Count();
+                        var total = ListGrossWrittenPremiumReport.Where(p => p.BranchName == x.BranchName || p.BranchName == "" || p.BranchName == null).Sum(item => item.Premium_due);
+                        var count2 = report2.FindAll(p => p.BranchName == x.BranchName || p.BranchName == "" || p.BranchName == null).Count();
+                        var total2 = report2.Where(p => p.BranchName == x.BranchName || p.BranchName == "" || p.BranchName == null).Sum(item => item.Premium_due);
+                        var count3 = report3.FindAll(p => p.BranchName == x.BranchName || p.BranchName == "" || p.BranchName == null).Count();
+                        var total3 = report3.Where(p => p.BranchName == x.BranchName || p.BranchName == "" || p.BranchName == null).Sum(item => item.Premium_due);
+                        var count4 = report4.FindAll(p => p.BranchName == x.BranchName || p.BranchName == "" || p.BranchName == null).Count();
+                        var total4 = report4.Where(p => p.BranchName == x.BranchName || p.BranchName == "" || p.BranchName == null).Sum(item => item.Premium_due);
+                        var count5 = report5.FindAll(p => p.BranchName == x.BranchName || p.BranchName == "" || p.BranchName == null).Count();
+                        var total5 = report5.Where(p => p.BranchName == x.BranchName || p.BranchName == "" || p.BranchName == null).Sum(item => item.Premium_due);
 
-                    model.BranchName = x.BranchName;
-                    model.FirstWeekCount = count;
-                    model.FirstWeekValue = total;
-                    model.SecondWeekCount = count2;
-                    model.SecondWeekValue = total2;
-                    model.ThirdWeekCount = count3;
-                    model.ThirdWeekValue = total3;
-                    model.FourWeekCount = count4;
-                    model.FourWeekValue = total4;
-                    model.TotalMonthCount = count5;
-                    model.TotalMonthValue = total5;
-                    weeklyGWPModels.Add(model);
-                }
-                
+                        model.BranchName = x.BranchName;
+                        model.FirstWeekCount = count;
+                        model.FirstWeekValue = total;
+                        model.SecondWeekCount = count2;
+                        model.SecondWeekValue = total2;
+                        model.ThirdWeekCount = count3;
+                        model.ThirdWeekValue = total3;
+                        model.FourWeekCount = count4;
+                        model.FourWeekValue = total4;
+                        model.TotalMonthCount = count5;
+                        model.TotalMonthValue = total5;
+                        weeklyGWPModels.Add(model);
+                    }
+                    else
+                    {
+                        var count = ListGrossWrittenPremiumReport.FindAll(p => p.BranchName == x.BranchName).Count();
+                        var total = ListGrossWrittenPremiumReport.Where(p => p.BranchName == x.BranchName).Sum(item => item.Premium_due);
+                        var count2 = report2.FindAll(p => p.BranchName == x.BranchName).Count();
+                        var total2 = report2.Where(p => p.BranchName == x.BranchName).Sum(item => item.Premium_due);
+                        var count3 = report3.FindAll(p => p.BranchName == x.BranchName).Count();
+                        var total3 = report3.Where(p => p.BranchName == x.BranchName).Sum(item => item.Premium_due);
+                        var count4 = report4.FindAll(p => p.BranchName == x.BranchName).Count();
+                        var total4 = report4.Where(p => p.BranchName == x.BranchName).Sum(item => item.Premium_due);
+                        var count5 = report5.FindAll(p => p.BranchName == x.BranchName).Count();
+                        var total5 = report5.Where(p => p.BranchName == x.BranchName).Sum(item => item.Premium_due);
 
-            });
+                        model.BranchName = x.BranchName;
+                        model.FirstWeekCount = count;
+                        model.FirstWeekValue = total;
+                        model.SecondWeekCount = count2;
+                        model.SecondWeekValue = total2;
+                        model.ThirdWeekCount = count3;
+                        model.ThirdWeekValue = total3;
+                        model.FourWeekCount = count4;
+                        model.FourWeekValue = total4;
+                        model.TotalMonthCount = count5;
+                        model.TotalMonthValue = total5;
+                        weeklyGWPModels.Add(model);
+                    }
 
-            GenerateExcel2(weeklyGWPModels);
+
+                });
+
+                GenerateExcel2(weeklyGWPModels);
             }
             catch (Exception ex)
             {
@@ -389,7 +386,7 @@ namespace Insurance.Service
                     facilityWorksheet.Cells["D5"].Value = secondWeekEnd;
                     facilityWorksheet.Cells["F5"].Value = thirdWeekEnd;
                     facilityWorksheet.Cells["H5"].Value = lastDate.ToString("MM/dd/yyyy");
-                    facilityWorksheet.Cells[6,1].LoadFromCollection(grossWrittenPremiumReports, true, OfficeOpenXml.Table.TableStyles.Light1);
+                    facilityWorksheet.Cells[6, 1].LoadFromCollection(grossWrittenPremiumReports, true, OfficeOpenXml.Table.TableStyles.Light1);
                     facilityWorksheet.Cells["A" + totalsIndex.ToString()].LoadFromText("TOTALS").Style.Font.Bold = true;
                     facilityWorksheet.Cells["B" + totalsIndex.ToString()].LoadFromText(firstTotalCount.ToString()).Style.Font.Bold = true;
                     facilityWorksheet.Cells["C" + totalsIndex.ToString()].LoadFromText(firstTotalValue.ToString()).Style.Font.Bold = true;
@@ -452,10 +449,10 @@ namespace Insurance.Service
             }
         }
 
-        public List<GrossWrittenPremiumReportModels> getGWPData(string startDate, string endDate) 
+        public List<GrossWrittenPremiumReportModels> getGWPData(string startDate, string endDate)
         {
             var ListGrossWrittenPremiumReport = new List<GrossWrittenPremiumReportModels>();
-            try 
+            try
             {
                 var query = " select PolicyDetail.PolicyNumber as Policy_Number, Customer.ALMId, case when Customer.ALMId is null  then  [dbo].fn_GetUserCallCenterAgent(SummaryDetail.CreatedBy) else [dbo].fn_GetUserALM(Customer.BranchId) end  as PolicyCreatedBy, Customer.FirstName + ' ' + Customer.LastName as Customer_Name,VehicleDetail.TransactionDate as Transaction_date, ";
                 query += "  case when Customer.id=SummaryDetail.CreatedBy then [dbo].fn_GetUserBranch(Customer.id) else [dbo].fn_GetUserBranch(SummaryDetail.CreatedBy) end as BranchName, ";
@@ -503,13 +500,13 @@ namespace Insurance.Service
                     IsActive = x.IsActive,
                     RenewPolicyNumber = x.RenewPolicyNumber,
                 }).ToList();
-                
+
 
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
-                
-               // Debug.WriteLine(ex);
+
+                // Debug.WriteLine(ex);
                 return ListGrossWrittenPremiumReport;
             }
 

@@ -1,26 +1,23 @@
-﻿using InsuranceClaim.Models;
-using PayPal.Api;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using AutoMapper;
 using Insurance.Domain;
-using AutoMapper;
+using Insurance.Service;
+using InsuranceClaim.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using System.Threading.Tasks;
-using System.Web.Script.Serialization;
-using Insurance.Service;
-using System.Globalization;
-using System.IO;
+using PayPal.Api;
 using QRCoder;
+using RestSharp;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Net.Http;
-
-using Newtonsoft.Json;
-using RestSharp;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 namespace InsuranceClaim.Controllers
 {
@@ -99,7 +96,7 @@ namespace InsuranceClaim.Controllers
 
             // var res = JsonConvert.DeserializeObject<SummaryDetailModel>(response.Content);
 
-           
+
 
 
         }
@@ -1092,10 +1089,10 @@ namespace InsuranceClaim.Controllers
             detail.customerLastName = customer.LastName;
 
 
-            if(vehicle.IsLicenseDiskNeeded==true)
+            if (vehicle.IsLicenseDiskNeeded == true)
             {
-                var licenseDelivery = InsuranceContext.LicenceDiskDeliveryAddresses.Single(where: "vehicleId="+vehicle.Id);
-                if(licenseDelivery!=null)
+                var licenseDelivery = InsuranceContext.LicenceDiskDeliveryAddresses.Single(where: "vehicleId=" + vehicle.Id);
+                if (licenseDelivery != null)
                 {
                     detail.addressLine1 = licenseDelivery.Address1;
                     detail.addressLine2 = licenseDelivery.Address2;
@@ -1111,12 +1108,12 @@ namespace InsuranceClaim.Controllers
                 detail.city = "Harare";
             }
 
-            
+
             detail.phoneNumber = customer.PhoneNumber;
             detail.policyID = policy.PolicyNumber;
             detail.policyTransactionDate = vehicle.TransactionDate.Value.ToShortDateString();
             detail.policyAmount = summaryDetail.TotalPremium.Value;
-            
+
             if (userLoggedin)
             {
                 detail.agentID = summaryDetail.CreatedBy.ToString();
@@ -1138,7 +1135,7 @@ namespace InsuranceClaim.Controllers
             payment.type = "invoice";
             payment.reference = "--";
             payment.paymentMethod = "--";
-            //InsuranceContext.ReceiptAndPayments.Insert(payment);
+
 
             saveRecieptAndPayment(payment);
 

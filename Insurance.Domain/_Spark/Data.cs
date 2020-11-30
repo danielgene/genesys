@@ -1,10 +1,3 @@
-	
-using System;
-using System.Linq;
-using System.Text;
-using System.Data;
-using System.Collections.Generic;
-
 namespace Insurance.Domain
 {
     // ############################################################################
@@ -18,17 +11,17 @@ namespace Insurance.Domain
     // # if the code is regenerated.
     // #
     // ############################################################################
-	
-	// Insurance Db
 
-	public partial class InsuranceDb : Db
-	{
+    // Insurance Db
+
+    public partial class InsuranceDb : Db
+    {
 #if SVDEV
         public InsuranceDb() : base("Insurance-d") { }
 #elif SVSTAGE
         public InsuranceDb() : base("Insurance-s") { }
 #else
-        public InsuranceDb() : base("Insurance") {}
+        public InsuranceDb() : base("Insurance") { }
 #endif
     }
 }

@@ -3,9 +3,7 @@ using Insurance.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Insurance.Service
 {
@@ -31,7 +29,7 @@ namespace Insurance.Service
             var customerDetail = InsuranceContext.Query("select top 1 * from Customer order by id desc").Select(x => new Customer()
             {
                 //Id = x.Id,
-                CustomerId= x.Id
+                CustomerId = x.Id
             }).FirstOrDefault();
 
             return customerDetail;
@@ -39,13 +37,13 @@ namespace Insurance.Service
 
         public int SaveCustomer(Customer customerData)
         {
-                  int customerId = 0;
+            int customerId = 0;
             try
             {
                 InsuranceContext.Customers.Insert(customerData);
                 customerId = customerData.Id;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }

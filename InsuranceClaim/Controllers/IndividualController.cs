@@ -23,7 +23,7 @@ namespace InsuranceClaim.Controllers
     public class IndividualController : Controller
     {
         private ApplicationUserManager _userManager;
-        int currencyId = 8 ; //RTGS$ 6 for live
+        int currencyId = 8; //RTGS$ 6 for live
         int policyStatusId = 1;
         int businessSourceId = 1; // broker
         int InsurerId = 1; //Zimnat Insurance Company
@@ -562,7 +562,7 @@ namespace InsuranceClaim.Controllers
                         // var summaryDetial = InsuranceContext.SummaryVehicleDetails.Single(where: $"SummaryDetailId = '" + model.CustomSumarryDetilId + "'");
                         // GetSummaryVehicleDetails
 
-                        
+
 
 
                         if (summaryDetial != null && summaryDetial.Id != 0 && btnSendQuatation == "") // while user come from qutation email

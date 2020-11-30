@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InsuranceClaim.Models
 {
@@ -12,7 +9,7 @@ namespace InsuranceClaim.Models
         public int? Id { get; set; }
         public string Customer_Name { get; set; }
         public string Policy_Number { get; set; }
-       
+
         public string Policy_endate { get; set; }
         public string Policy_startdate { get; set; }
         public string Transaction_date { get; set; }
@@ -41,7 +38,7 @@ namespace InsuranceClaim.Models
         public bool? IsActive { get; set; }
         public string Currency { get; set; }
 
-        public string RenewPolicyNumber {get; set;}
+        public string RenewPolicyNumber { get; set; }
 
         public string ALMId { get; set; }
 
@@ -53,12 +50,12 @@ namespace InsuranceClaim.Models
 
         public string SourceDetailName { get; set; }
 
-        public int SummaryDetailId { get; set; } 
+        public int SummaryDetailId { get; set; }
 
         public int PaymentMethodId { get; set; }
 
         public int CreatedBy { get; set; }
-       
+
 
         public int AgentActualPolicy { get; set; }
 
@@ -78,9 +75,9 @@ namespace InsuranceClaim.Models
 
         public string WorkDesc { get; set; }
 
-       public string ReceiptNumber { get; set; }
+        public string ReceiptNumber { get; set; }
 
-      
+
 
     }
 
@@ -121,13 +118,13 @@ namespace InsuranceClaim.Models
     }
     public class GrossWrittenPremiumReportSearchModels
     {
-        
+
         public List<int> BranchId { get; set; }
 
         public int ReportTypeId { get; set; }
         public List<BranchModel> ListBranchModelData { get; set; }
         public List<GrossWrittenPremiumReportModels> ListGrossWrittenPremiumReportdata { get; set; }
-        
+
         [Required(ErrorMessage = "Please Enter Start Date.")]
         public string FormDate { get; set; }
         [Required(ErrorMessage = "Please Enter End Date.")]
@@ -169,7 +166,7 @@ namespace InsuranceClaim.Models
     }
 
 
-   
+
 
 
 }

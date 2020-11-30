@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InsuranceClaim.Models
 {
@@ -28,8 +24,8 @@ namespace InsuranceClaim.Models
 
         public string ServiceProviderType { get; set; }
         public string RegistrationNo { get; set; }
-        public string  PolicyNumber{get; set;}
-    public string ClaimantName { get; set; }
+        public string PolicyNumber { get; set; }
+        public string ClaimantName { get; set; }
 
     }
 }

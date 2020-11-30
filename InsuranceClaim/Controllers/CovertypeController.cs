@@ -1,15 +1,13 @@
-﻿using Insurance.Domain;
+﻿using AutoMapper;
+using Insurance.Domain;
 using InsuranceClaim.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using AutoMapper;
 
 namespace InsuranceClaim.Controllers
 {
-    
+
     public class CovertypeController : Controller
     {
         // GET: Covertype

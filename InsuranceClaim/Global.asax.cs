@@ -2,10 +2,6 @@
 using Insurance.Domain;
 using Insurance.Domain.Code;
 using InsuranceClaim.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
@@ -22,7 +18,7 @@ namespace InsuranceClaim
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             RunMgr.Instance.Init();
             Map();
-           
+
         }
         private void Map()
         {
@@ -88,7 +84,7 @@ namespace InsuranceClaim
 
                 // domestic
                 cfg.CreateMap<DomesticRiskDetailModel, Domestic_Vehicle>().ReverseMap();
-                cfg.CreateMap<DomesticSummaryModel, DomesticSummaryDetail>().ReverseMap();         
+                cfg.CreateMap<DomesticSummaryModel, DomesticSummaryDetail>().ReverseMap();
             });
         }
     }

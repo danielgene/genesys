@@ -1,9 +1,7 @@
 ﻿using Insurance.Domain;
 using InsuranceClaim.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace InsuranceClaim.Controllers
@@ -13,9 +11,9 @@ namespace InsuranceClaim.Controllers
         // GET: Currency
         public ActionResult Index()
         {
-          
+
             var currencyList = (from currency in InsuranceContext.Currencies.All().ToList()
-                                select new CurrencyModel { CurrencyName = currency.Name, Description = currency.Description, CreatedOn = currency.CreatedOn, Id = currency.Id,IsActive=currency.IsActive }).ToList();
+                                select new CurrencyModel { CurrencyName = currency.Name, Description = currency.Description, CreatedOn = currency.CreatedOn, Id = currency.Id, IsActive = currency.IsActive }).ToList();
             return View(currencyList);
         }
 
@@ -41,8 +39,8 @@ namespace InsuranceClaim.Controllers
                 var currencyModel = InsuranceContext.Currencies.Single(where: $"Name='{model.CurrencyName}'");
                 if (currencyModel == null)
                 {
-                
-                    Currency currency = new Currency { Name=model.CurrencyName, Description= model.Description, CreatedOn=DateTime.Now};
+
+                    Currency currency = new Currency { Name = model.CurrencyName, Description = model.Description, CreatedOn = DateTime.Now };
                     InsuranceContext.Currencies.Insert(currency);
 
 
@@ -89,12 +87,12 @@ namespace InsuranceClaim.Controllers
 
                 if (currencyModel != null)
                 {
-                    if(CheckCurrencyExist(currencyModel.Name, model.CurrencyName))
+                    if (CheckCurrencyExist(currencyModel.Name, model.CurrencyName))
                     {
                         currencyModel.Name = model.CurrencyName;
                         currencyModel.Description = model.Description;
                         InsuranceContext.Currencies.Update(currencyModel);
-                    }               
+                    }
                 }
 
                 return RedirectToAction("Index");

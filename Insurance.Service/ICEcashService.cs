@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RestSharp;
-using System.Configuration;
-using System.Security.Cryptography;
-using Newtonsoft.Json.Linq;
+﻿using Insurance.Domain;
 using InsuranceClaim.Models;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using RestSharp;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
-using Insurance.Domain;
-using System.Management;
 
 namespace Insurance.Service
 {
@@ -400,7 +397,7 @@ namespace Insurance.Service
 
             //  obj.Add(new VehicleObject { VRN = RegistrationNo, DurationMonths = (PaymentTermId == 1 ? 12 : PaymentTermId), VehicleValue = Convert.ToInt32(suminsured), YearManufacture = Convert.ToInt32(VehicleYear), InsuranceType = Convert.ToInt32(CoverTypeId), VehicleType = Convert.ToInt32(VehicleUsage), Make = make, Model = model, EntityType = "", Town = CustomerInfo.City, Address1 = UserService.ReplaceSpecialChracter(CustomerInfo.AddressLine1), Address2 = UserService.ReplaceSpecialChracter(CustomerInfo.AddressLine2), CompanyName = "", FirstName = CustomerInfo.FirstName, LastName = CustomerInfo.LastName, IDNumber = CustomerInfo.NationalIdentificationNumber, MSISDN = CustomerInfo.CountryCode + CustomerInfo.PhoneNumber, TaxClass = TaxClass });
 
-            obj.Add(new VehicleObject { VRN = RegistrationNo, DurationMonths = (PaymentTermId == 1 ? 12 : PaymentTermId), VehicleValue = Convert.ToInt32(suminsured), YearManufacture = Convert.ToInt32(VehicleYear), InsuranceType = Convert.ToInt32(CoverTypeId), VehicleType = Convert.ToInt32(VehicleUsage),  EntityType = "", Town = CustomerInfo.City, Address1 = UserService.ReplaceSpecialChracter(CustomerInfo.AddressLine1), Address2 = UserService.ReplaceSpecialChracter(CustomerInfo.AddressLine2), CompanyName = "", FirstName = CustomerInfo.FirstName, LastName = CustomerInfo.LastName, IDNumber = CustomerInfo.NationalIdentificationNumber, MSISDN = CustomerInfo.CountryCode + CustomerInfo.PhoneNumber, TaxClass = TaxClass });
+            obj.Add(new VehicleObject { VRN = RegistrationNo, DurationMonths = (PaymentTermId == 1 ? 12 : PaymentTermId), VehicleValue = Convert.ToInt32(suminsured), YearManufacture = Convert.ToInt32(VehicleYear), InsuranceType = Convert.ToInt32(CoverTypeId), VehicleType = Convert.ToInt32(VehicleUsage), EntityType = "", Town = CustomerInfo.City, Address1 = UserService.ReplaceSpecialChracter(CustomerInfo.AddressLine1), Address2 = UserService.ReplaceSpecialChracter(CustomerInfo.AddressLine2), CompanyName = "", FirstName = CustomerInfo.FirstName, LastName = CustomerInfo.LastName, IDNumber = CustomerInfo.NationalIdentificationNumber, MSISDN = CustomerInfo.CountryCode + CustomerInfo.PhoneNumber, TaxClass = TaxClass });
 
 
             QuoteArguments objArg = new QuoteArguments();
@@ -716,7 +713,7 @@ namespace Insurance.Service
                 MSISDN = UserService.ReplaceSpecialChracter(CustomerInfo.CountryCode + CustomerInfo.PhoneNumber),
                 LicFrequency = LicFrequencyTerm.ToString(),
                 //RadioTVUsage = RadioTVUsage,
-               // RadioTVFrequency = RadioTVFreeQuency,
+                // RadioTVFrequency = RadioTVFreeQuency,
                 SuburbID = "1",
                 ClientIDType = clientIdType,
                 TaxClass = taxClassId
@@ -844,7 +841,7 @@ namespace Insurance.Service
 
             List<VehicleCombObject> obj = new List<VehicleCombObject>();
 
-            if(string.IsNullOrEmpty(zinaraPaymentTerm))
+            if (string.IsNullOrEmpty(zinaraPaymentTerm))
                 zinaraPaymentTerm = "0";
 
             if (string.IsNullOrEmpty(radioPaymentTerm))
@@ -870,7 +867,7 @@ namespace Insurance.Service
                 RadioTVFreeQuency = 0;
             }
             else
-                RadioTVFreeQuency = GetMonthKey( Convert.ToInt32(radioPaymentTerm));
+                RadioTVFreeQuency = GetMonthKey(Convert.ToInt32(radioPaymentTerm));
 
 
             obj.Add(new VehicleCombObject
@@ -1030,7 +1027,7 @@ namespace Insurance.Service
             }
 
 
-            if (paymentMethod == 2 || paymentMethod==(int)InsuranceClaim.Models.paymentMethod.PayLater) // it's represent to visa
+            if (paymentMethod == 2 || paymentMethod == (int)InsuranceClaim.Models.paymentMethod.PayLater) // it's represent to visa
             {
                 paymentMethod = 1;
             }
@@ -1730,14 +1727,14 @@ namespace Insurance.Service
             //string PSK = "127782435202916376850511";
             string _json = "";
 
-            
+
 
             OTPConfirmationArguments objArg = new OTPConfirmationArguments();
             objArg.PartnerReference = Guid.NewGuid().ToString();
             objArg.Date = DateTime.Now.ToString("yyyyMMddhhmmss");
             objArg.Version = "2.0";
             objArg.PartnerToken = PartnerToken;
-            objArg.Request = new OTPConfFunctionObject { Function = "OTPConfirmation", PaymentMethod = "2", ICEcashReference=model.ICEcashReference, OTP = model.OTP };
+            objArg.Request = new OTPConfFunctionObject { Function = "OTPConfirmation", PaymentMethod = "2", ICEcashReference = model.ICEcashReference, OTP = model.OTP };
 
             _json = Newtonsoft.Json.JsonConvert.SerializeObject(objArg);
 
@@ -1852,8 +1849,8 @@ namespace Insurance.Service
         public int VehicleValue { get; set; }
         public int InsuranceType { get; set; }
         public int VehicleType { get; set; }
-       // public string Make { get; set; }
-       // public string Model { get; set; }
+        // public string Make { get; set; }
+        // public string Model { get; set; }
         public string TaxClass { get; set; }
         public int YearManufacture { get; set; }
 
@@ -1985,7 +1982,7 @@ namespace Insurance.Service
         public QuoteTBAFunctionObject Request { get; set; }
     }
 
-    
+
 
     //VehicleCombObject
 
@@ -2011,7 +2008,7 @@ namespace Insurance.Service
         public ZinraOnlyFunctionObject Request { get; set; }
     }
 
-  
+
 
 
 
@@ -2028,7 +2025,7 @@ namespace Insurance.Service
         public List<VehicleTBAObject> Vehicles { get; set; }
     }
 
-   
+
 
 
     public class CombineFunctionObject
@@ -2061,7 +2058,7 @@ namespace Insurance.Service
     }
 
 
-   
+
     public class CombineQuoteRequest
     {
         public CombArguments Arguments { get; set; }

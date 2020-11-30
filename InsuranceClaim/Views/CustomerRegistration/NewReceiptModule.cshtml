@@ -377,11 +377,11 @@
         var paymentMethod = $('#paymentMethod option:selected').text();
         var currency = $('#paymentCurrency option:selected').text();
         var policyNumbr = $('#InvoiceNumber').val();
-
+        var policyId = $('#policyId').val();
         var description = $('#transactionDescription').val();
 
         var data = {
-            'policyId': "12322",
+            'policyId': policyId,
             'amount': paymentAmt,
             'reference': transactionRef,
             'policyNumber': policyNumbr,

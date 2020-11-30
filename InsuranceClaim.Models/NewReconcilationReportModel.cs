@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InsuranceClaim.Models
 {
@@ -37,6 +34,8 @@ namespace InsuranceClaim.Models
         public decimal AmountPaid { get; set; }
         public decimal? Balance { get; set; }
         public string PaymentType { get; set; }
+        public string PaymentReference { get; set; }
+
 
     }
 }

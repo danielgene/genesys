@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
 namespace SV.Domain.Code
 {
-    
+
     // enumeration of log severity levels
 
     public enum LogSeverity

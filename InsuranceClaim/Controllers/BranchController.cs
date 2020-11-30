@@ -1,9 +1,7 @@
 ﻿using Insurance.Domain;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 
 namespace InsuranceClaim.Controllers
@@ -114,11 +112,11 @@ namespace InsuranceClaim.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit( Branch branch)
+        public ActionResult Edit(Branch branch)
         {
             if (ModelState.IsValid)
             {
-              //  branch.AlmId = GetALMId();
+                //  branch.AlmId = GetALMId();
                 InsuranceContext.Branches.Update(branch);
                 return RedirectToAction("Index");
             }
@@ -147,7 +145,7 @@ namespace InsuranceClaim.Controllers
         {
             Branch branch = InsuranceContext.Branches.Single(id);
             InsuranceContext.Branches.Delete(branch);
- 
+
             return RedirectToAction("Index");
         }
 

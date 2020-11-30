@@ -1,10 +1,5 @@
-﻿using Insurance.Domain;
-using Insurance.Service;
-using InsuranceClaim.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace InsuranceClaim.Controllers
@@ -45,7 +40,7 @@ namespace InsuranceClaim.Controllers
 
         public ActionResult DownloadLogFile()
         {
-            string path = Server.MapPath("/LogFile.txt"); 
+            string path = Server.MapPath("/LogFile.txt");
             byte[] fileBytes = System.IO.File.ReadAllBytes(path);
             string fileName = "LogFile.txt";
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
@@ -88,14 +83,14 @@ namespace InsuranceClaim.Controllers
         [HttpPost]
         public ActionResult SearchVrn(string RegistrationNum, string NationalId)
         {
-            if(!string.IsNullOrWhiteSpace(RegistrationNum))
+            if (!string.IsNullOrWhiteSpace(RegistrationNum))
             {
-                return RedirectToAction("Index", "WebCustomer", new { reg =RegistrationNum, NationalId = NationalId });
+                return RedirectToAction("Index", "WebCustomer", new { reg = RegistrationNum, NationalId = NationalId });
             }
             else
             {
                 return View("Index");
-            }     
+            }
         }
 
 

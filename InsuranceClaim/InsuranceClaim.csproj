@@ -1201,6 +1201,8 @@
     <Content Include="Views\Domestic\ThankYou.cshtml" />
     <Content Include="Views\Report\ALMGWPPartnerReport.cshtml" />
     <Content Include="Views\CustomerRegistration\NewReceiptModule.cshtml" />
+    <Content Include="Views\Report\NewDailyReceiptsReport.cshtml" />
+    <Content Include="Views\Account\ReceiptCancelation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AgentLogo\" />

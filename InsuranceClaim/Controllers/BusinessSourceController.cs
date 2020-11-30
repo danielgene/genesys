@@ -3,7 +3,6 @@ using InsuranceClaim.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace InsuranceClaim.Controllers
@@ -93,7 +92,7 @@ namespace InsuranceClaim.Controllers
                 {
                     var businessResource = InsuranceContext.BusinessSources.Single(model.Id);
 
-                  
+
                     if (businessResource != null)
                     {
 
@@ -108,7 +107,7 @@ namespace InsuranceClaim.Controllers
                         }
 
 
-                        
+
                     }
                 }
 

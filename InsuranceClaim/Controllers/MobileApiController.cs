@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using Insurance.Domain;
+﻿using Insurance.Domain;
 using InsuranceClaim.Models;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace InsuranceClaim.Controllers
 {
@@ -51,7 +48,7 @@ namespace InsuranceClaim.Controllers
             }).FirstOrDefault();
 
 
-            if(result==null)
+            if (result == null)
             {
                 result = new PayLaterPolicyDetail();
                 result.ErrorMsg = "Records not found";

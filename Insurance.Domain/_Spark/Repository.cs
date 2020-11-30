@@ -1,9 +1,5 @@
-
-using System;
-using System.Linq;
-using System.Text;
-using System.Data;
 using System.Collections.Generic;
+using System.Data;
 
 
 namespace Insurance.Domain
@@ -71,10 +67,10 @@ namespace Insurance.Domain
         public static PolicyRenewReminderSettings PolicyRenewReminderSettings { get { return new PolicyRenewReminderSettings(); } }
         public static ReminderFaileds ReminderFaileds { get { return new ReminderFaileds(); } }
         public static LicenceDiskDeliveryAddresses LicenceDiskDeliveryAddresses { get { return new LicenceDiskDeliveryAddresses(); } }
-       public static UniqueCustomers UniqueCustomers { get { return new UniqueCustomers(); } }
-       public static BirthdayMessages BirthdayMessages { get { return new BirthdayMessages(); } }
+        public static UniqueCustomers UniqueCustomers { get { return new UniqueCustomers(); } }
+        public static BirthdayMessages BirthdayMessages { get { return new BirthdayMessages(); } }
 
-        public static Cities Cities  { get { return new Cities(); } }
+        public static Cities Cities { get { return new Cities(); } }
         public static EndorsementVehicleDetails EndorsementVehicleDetails { get { return new EndorsementVehicleDetails(); } }
         public static EndorsementSummaryDetails EndorsementSummaryDetails { get { return new EndorsementSummaryDetails(); } }
         public static EndorsementSummaryVehicleDetails EndorsementSummaryVehicleDetails { get { return new EndorsementSummaryVehicleDetails(); } }
@@ -167,7 +163,7 @@ namespace Insurance.Domain
         public static DataSet GetDataSet(string sql, params object[] parms) { return db.GetDataSet(sql, parms); }
         public static DataTable GetDataTable(string sql, params object[] parms) { return db.GetDataTable(sql, parms); }
         public static DataRow GetDataRow(string sql, params object[] parms) { return db.GetDataRow(sql, parms); }
-       
+
 
     }
 }

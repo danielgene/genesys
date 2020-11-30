@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InsuranceClaim.Models
 {
- public class RadioLicenceReportModel
+    public class RadioLicenceReportModel
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -16,7 +12,7 @@ namespace InsuranceClaim.Models
         public decimal? RadioLicenseCost { get; set; }
 
         public string Currency { get; set; }
-             
+
     }
     public class ListRadioLicenceReport
     {

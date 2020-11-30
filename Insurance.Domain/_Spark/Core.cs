@@ -1,17 +1,17 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Data.Common;
-using System.Data;
-using System.Dynamic;
+using System.ComponentModel;
 using System.Configuration;
-using System.Transactions;
+using System.Data;
+using System.Data.Common;
+using System.Data.SqlClient;
+using System.Dynamic;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Threading;
-using System.ComponentModel;
-using System.Data.SqlClient;
+using System.Transactions;
 
 namespace Insurance.Domain
 {
@@ -26,8 +26,8 @@ namespace Insurance.Domain
     // # if the code is regenerated.
     // #
     // ############################################################################
-	
-	#region Data Layer
+
+    #region Data Layer
 
     public partial class Db
     {
@@ -172,8 +172,8 @@ namespace Insurance.Domain
         public void IdentityInsertEnable(string tableName, bool on)
         {
             string ident = "SET IDENTITY_INSERT [dbo].[" + tableName + "] " + ((on) ? "ON" : "OFF") + ";";
-//            if(on)
-//                ident = "DELETE FROM " + tableName + "; " + ident;
+            //            if(on)
+            //                ident = "DELETE FROM " + tableName + "; " + ident;
             try
             {
                 using (var connection = CreateConnection())
@@ -439,18 +439,18 @@ namespace Insurance.Domain
         }
     }
 
-	#endregion
+    #endregion
 
     #region Domain Layer
 
-	// entity class. base class to all domain objects
+    // entity class. base class to all domain objects
 
     public partial class Entity<T> where T : Entity<T>, new()
     {
         protected static string tableName { get; set; }
         protected static string keyName { get; set; }
         protected static Db db { get; set; }
-		protected static bool audit { get; set; }
+        protected static bool audit { get; set; }
 
         static Dictionary<string, PropertyInfo> props { get; set; }
         static Dictionary<string, SchemaMap> map { get; set; }
@@ -461,12 +461,12 @@ namespace Insurance.Domain
         static string sqlDelete { get; set; }
         static string sqlPaged { get; set; }
         static List<string> tableColumns { get; set; }
-		static List<T> cacheEntities { get; set; }
-		static DateTime cacheUpdated { get; set; }
+        static List<T> cacheEntities { get; set; }
+        static DateTime cacheUpdated { get; set; }
 
-		#region Static initialization
+        #region Static initialization
 
-		static Entity()
+        static Entity()
         {
             Init();
         }
@@ -498,7 +498,7 @@ namespace Insurance.Domain
 
         static void InitMap()
         {
-            props = typeof(T).GetProperties().ToDictionary(p => p.Name); 
+            props = typeof(T).GetProperties().ToDictionary(p => p.Name);
             map = new Dictionary<string, SchemaMap>();
 
             foreach (dynamic column in Columns)
@@ -588,19 +588,19 @@ namespace Insurance.Domain
         }
 
         public List<T> GetCachedEntities
-		{
-			get
-			{
-				if((DateTime.Now - cacheUpdated).TotalMinutes > 10)
-				{
-					cacheEntities = All().ToList();
-					cacheUpdated = DateTime.Now;
-				}
-				return cacheEntities;
-			}
-		}
+        {
+            get
+            {
+                if ((DateTime.Now - cacheUpdated).TotalMinutes > 10)
+                {
+                    cacheEntities = All().ToList();
+                    cacheUpdated = DateTime.Now;
+                }
+                return cacheEntities;
+            }
+        }
 
-		public T Single(int? id)
+        public T Single(int? id)
         {
             string sql = CreateSelect(keyName + " = @0 ");
             return db.Read(sql, Make, id).FirstOrDefault();
@@ -668,7 +668,7 @@ namespace Insurance.Domain
             object o = db.Scalar(sql, parms);
             return o is DBNull ? null : o;
         }
-        
+
         // retrieves a scalar min value by criteria
 
         public virtual object Min(string column = null, string where = null, params object[] parms)
@@ -887,7 +887,7 @@ namespace Insurance.Domain
             foreach (var key in PropsWithoutPrimaryKey)
             {
                 // don't include 'create' audit fields
-                if (audit && (key == "CreatedOn" || key == "CreatedBy")) continue; 
+                if (audit && (key == "CreatedOn" || key == "CreatedBy")) continue;
 
                 sets.AppendFormat("{0}=@{1}, ", key, key);
             }
@@ -1109,11 +1109,11 @@ namespace Insurance.Domain
         }
     }
 
-	#endregion
+    #endregion
 
     #region Repository Layer
 
-	// repository. base class to all repositories
+    // repository. base class to all repositories
 
     public partial class Repository<T> where T : Entity<T>, new()
     {
@@ -1121,7 +1121,7 @@ namespace Insurance.Domain
 
         public virtual T Single(int? id)
         {
-            
+
             return t.Single(id);
         }
         public virtual T SingleCustome(int? id)
@@ -1135,11 +1135,11 @@ namespace Insurance.Domain
         }
 
         public List<T> GetCachedEntities
-		{
-			get { return t.GetCachedEntities; }
-		}
+        {
+            get { return t.GetCachedEntities; }
+        }
 
-		public virtual T Single(string where = null, params object[] parms)
+        public virtual T Single(string where = null, params object[] parms)
         {
             return t.Single(where, parms);
         }
@@ -1216,7 +1216,7 @@ namespace Insurance.Domain
         }
     }
 
-	#endregion
+    #endregion
 
     #region Unit Of Work Pattern
 
@@ -1277,5 +1277,5 @@ namespace Insurance.Domain
         }
     }
 
-	#endregion
+    #endregion
 }

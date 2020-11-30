@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InsuranceClaim.Models
 {
-   public class ReinsuranceCommissionReportModel
-   {
+    public class ReinsuranceCommissionReportModel
+    {
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string PolicyNumber { get; set; }

@@ -4,20 +4,19 @@ using Insurance.Service;
 using InsuranceClaim.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using QRCoder;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
-using System.Web.Mvc;
-using static InsuranceClaim.Controllers.CustomerRegistrationController;
-using System.Configuration;
 using System.Web.Configuration;
-using System.IO;
-using QRCoder;
-using System.Drawing;
-using System.Drawing.Imaging;
+using System.Web.Mvc;
 
 namespace InsuranceClaim.Controllers
 {
@@ -28,7 +27,7 @@ namespace InsuranceClaim.Controllers
         string AdminEmail = WebConfigurationManager.AppSettings["AdminEmail"];
         string ZimnatEmail = WebConfigurationManager.AppSettings["ZimnatEmail"];
         public static string _AgentModule = "AgentModule";
-        Insurance.Service.smsService objsmsService = new Insurance.Service.smsService();
+       smsService objsmsService = new smsService();
 
         public ApplicationUserManager UserManager
         {
@@ -49,7 +48,7 @@ namespace InsuranceClaim.Controllers
             return View();
         }
 
-        public ActionResult CustomerDetail(int id=0)
+        public ActionResult CustomerDetail(int id = 0)
         {
 
             if (id != -1) // -1 use for getting session value when click on back button
@@ -348,7 +347,7 @@ namespace InsuranceClaim.Controllers
 
             viewModel.CurrencyId = 6; // default "RTGS$" selected // for live server
 
-           // viewModel.CoverTypeId = (int)eCoverType.Comprehensive;
+            // viewModel.CoverTypeId = (int)eCoverType.Comprehensive;
 
             ViewBag.Makers = makers;
             viewModel.isUpdate = false;
@@ -544,7 +543,7 @@ namespace InsuranceClaim.Controllers
 
 
 
-                       // Session["VehicleDetails"] = listriskdetailmodel;
+                        // Session["VehicleDetails"] = listriskdetailmodel;
                     }
                     else
                     {
@@ -570,7 +569,7 @@ namespace InsuranceClaim.Controllers
                 }
                 catch (Exception ex)
                 {
-                  //  WriteLog(ex.Message);
+                    //  WriteLog(ex.Message);
 
                     if (User.IsInRole("Staff"))
                     {
@@ -625,7 +624,7 @@ namespace InsuranceClaim.Controllers
 
 
                             listriskdetailmodel.Add(model);
-                         //   Session["VehicleDetails"] = listriskdetailmodel;
+                            //   Session["VehicleDetails"] = listriskdetailmodel;
 
                             selectedIndex = listriskdetailmodel.Count();
 
@@ -694,7 +693,7 @@ namespace InsuranceClaim.Controllers
                 }
                 catch (Exception ex)
                 {
-                //    WriteLog(ex.Message);
+                    //    WriteLog(ex.Message);
                     return RedirectToAction("SummaryDetail");
                 }
             }
@@ -891,7 +890,7 @@ namespace InsuranceClaim.Controllers
             }
             catch (Exception ex)
             {
-              //  WriteLog(ex.Message);
+                //  WriteLog(ex.Message);
                 return View(model);
             }
 
@@ -1019,7 +1018,7 @@ namespace InsuranceClaim.Controllers
                             {
                                 if (model.PaymentMethodId == 1)
                                     return RedirectToAction("SaveDetailList", new { id = model.CustomSumarryDetilId, invoiceNumber = model.InvoiceNumber });
-                               else if (model.PaymentMethodId == (int)paymentMethod.ecocash)
+                                else if (model.PaymentMethodId == (int)paymentMethod.ecocash)
                                 {
                                     //return RedirectToAction("InitiatePaynowTransaction", "Paypal", new { id = model.CustomSumarryDetilId, TotalPremiumPaid = Convert.ToString(model.AmountPaid), PolicyNumber = policyNum, Email = customerEmail });
                                     TempData["PaymentMethodId"] = model.PaymentMethodId;
@@ -1035,7 +1034,7 @@ namespace InsuranceClaim.Controllers
                                 {
                                     TempData["PaymentMethodId"] = model.PaymentMethodId;
                                     return RedirectToAction("IceCashPayment", "Paypal", new { id = model.CustomSumarryDetilId, amount = Convert.ToString(model.AmountPaid), Paymentid = model.PaymentMethodId.Value });
-                                }                          
+                                }
                                 else
                                     return RedirectToAction("PaymentDetail", new { id = model.CustomSumarryDetilId, invoiceNumer = model.InvoiceNumber, Paymentid = model.PaymentMethodId.Value });
                             }
@@ -1225,7 +1224,7 @@ namespace InsuranceClaim.Controllers
                                 if (number != customer.PhoneNumber)
                                 {
                                     user.PhoneNumber = customer.PhoneNumber;
-                                   // UserManager.Update(user);  // 13_june
+                                    // UserManager.Update(user);  // 13_june
                                 }
                                 // customer.UserID = User.Identity.GetUserId().ToString();
 
@@ -1233,7 +1232,7 @@ namespace InsuranceClaim.Controllers
 
                                 if (customerDetials != null)
                                 {
-                                   // customer.UserID = user.Id;  // 13_june_2019
+                                    // customer.UserID = user.Id;  // 13_june_2019
                                     customer.CustomerId = customerDetials.CustomerId;
                                     var customerdata = Mapper.Map<CustomerModel, Customer>(customer);
 
@@ -1241,7 +1240,7 @@ namespace InsuranceClaim.Controllers
                                     {
                                         customerdata.CustomerId = customerdata.Id;
                                     }
-                                 //   InsuranceContext.Customers.Update(customerdata); // 13_june_2019
+                                    //   InsuranceContext.Customers.Update(customerdata); // 13_june_2019
                                 }
                             }
                         }
@@ -1760,7 +1759,7 @@ namespace InsuranceClaim.Controllers
                                     if (_customerData != null)
                                     {
                                         summarydata.CreatedBy = _customerData.Id;
-                                        summarydata.AgentId= GetAgentId(_customerData.CreatedBy);
+                                        summarydata.AgentId = GetAgentId(_customerData.CreatedBy);
 
                                     }
                                 }
@@ -1954,7 +1953,7 @@ namespace InsuranceClaim.Controllers
                                 ExcessAmount = ExcessAmount + Convert.ToDecimal(item.ExcessAmount);
 
 
-                               
+
 
                                 if (item.CoverTypeId == 1)
                                 {
@@ -2021,14 +2020,14 @@ namespace InsuranceClaim.Controllers
 
                             // Product name
 
-                            int agentId= summaryDetail.AgentId;
+                            int agentId = summaryDetail.AgentId;
                             var agentDetials = InsuranceContext.Customers.Single(where: "Id=" + agentId);
                             var agentDetialsByUserId = UserManager.FindById(agentDetials.UserID);
                             var agentLogoDeatils = InsuranceContext.AgentLogos.Single(where: "CustomerId=" + agentId);
 
 
                             string MotorBody = System.IO.File.ReadAllText(System.Web.Hosting.HostingEnvironment.MapPath(QuotationEmailPath));
-                            var Bodyy = MotorBody.Replace("##PolicyNo##", policyQuotation.PolicyNumber).Replace("##path##", filepath+ agentLogoDeatils.LogoPath).Replace("##Cellnumber##", user.PhoneNumber)
+                            var Bodyy = MotorBody.Replace("##PolicyNo##", policyQuotation.PolicyNumber).Replace("##path##", filepath + agentLogoDeatils.LogoPath).Replace("##Cellnumber##", user.PhoneNumber)
                                   .Replace("#AgentFirstName#", agentDetials.FirstName).Replace("#AgentLastName#", agentDetials.LastName)
                  .Replace("#AgentAddress1#", agentDetials.AddressLine1).Replace("#AgentCity#", agentDetials.City)
                   .Replace("#AgentPhone#", agentDetials.PhoneNumber).Replace("#AgentWhatsapp#", agentDetials.AgentWhatsapp)
@@ -2130,7 +2129,7 @@ namespace InsuranceClaim.Controllers
                         // return RedirectToAction("InitiatePaynowTransaction", "Paypal", new { id = DbEntry.Id, TotalPremiumPaid = Convert.ToString(model.AmountPaid), PolicyNumber = policy.PolicyNumber, Email = customer.EmailAddress });
 
                         if (model.PaymentMethodId == 1)
-                            return RedirectToAction("SaveDetailList", new { id = DbEntry.Id, invoiceNumer = model.InvoiceNumber, Paymentid = model.PaymentMethodId.Value, agentId=DbEntry.AgentId });
+                            return RedirectToAction("SaveDetailList", new { id = DbEntry.Id, invoiceNumer = model.InvoiceNumber, Paymentid = model.PaymentMethodId.Value, agentId = DbEntry.AgentId });
                         if (model.PaymentMethodId == (int)paymentMethod.ecocash)
                         {
 
@@ -2138,7 +2137,7 @@ namespace InsuranceClaim.Controllers
                             TempData["PaymentMethodId"] = model.PaymentMethodId;
                             //  return RedirectToAction("makepayment", new { id = DbEntry.Id, TotalPremiumPaid = Convert.ToString(model.AmountPaid), model.PaymentMethodId }); for paynow
 
-                            return RedirectToAction("SaveDetailList", "Paypal", new { id = DbEntry.Id, invoiceNumer = model.InvoiceNumber, Paymentid= model.PaymentMethodId.Value });
+                            return RedirectToAction("SaveDetailList", "Paypal", new { id = DbEntry.Id, invoiceNumer = model.InvoiceNumber, Paymentid = model.PaymentMethodId.Value });
 
                         }
                         else if (model.PaymentMethodId == (int)paymentMethod.Zimswitch)
@@ -2146,7 +2145,7 @@ namespace InsuranceClaim.Controllers
                             TempData["PaymentMethodId"] = model.PaymentMethodId;
                             return RedirectToAction("IceCashPayment", "Paypal", new { id = model.Id, amount = Convert.ToString(model.AmountPaid), Paymentid = model.PaymentMethodId.Value });
                         }
-                       
+
 
                         else
                             return RedirectToAction("PaymentDetail", new { id = DbEntry.Id, invoiceNumer = model.InvoiceNumber, Paymentid = model.PaymentMethodId.Value });
@@ -2172,8 +2171,8 @@ namespace InsuranceClaim.Controllers
         {
             int agetnId = 0;
 
-            var dbCustomer = InsuranceContext.Customers.Single(where: "Id="+staffId);
-            if(dbCustomer!=null)
+            var dbCustomer = InsuranceContext.Customers.Single(where: "Id=" + staffId);
+            if (dbCustomer != null)
             {
                 agetnId = dbCustomer.Id;
             }
@@ -2194,7 +2193,7 @@ namespace InsuranceClaim.Controllers
         }
 
 
-        public async Task<ActionResult> SaveDetailList(Int32 id, string invoiceNumber = "", string Paymentid = "", int agentId=0)
+        public async Task<ActionResult> SaveDetailList(Int32 id, string invoiceNumber = "", string Paymentid = "", int agentId = 0)
         {
             //var PaymentId = Session["PaymentId"];
             //var InvoiceId = Session["InvoiceId"];
@@ -2334,50 +2333,50 @@ namespace InsuranceClaim.Controllers
             //if (!userLoggedin)
             //{
 
-            var agentDetials  = InsuranceContext.Customers.Single(where: "Id=" + agentId);
+            var agentDetials = InsuranceContext.Customers.Single(where: "Id=" + agentId);
             var agentDetialsByUserId = UserManager.FindById(agentDetials.UserID);
-            var agentLogoDeatils = InsuranceContext.AgentLogos.Single(where : "CustomerId=" + agentId);
+            var agentLogoDeatils = InsuranceContext.AgentLogos.Single(where: "CustomerId=" + agentId);
 
 
             string emailTemplatePath = "/Views/Shared/EmaiTemplates/AgentUserRegistration.cshtml";
-                string EmailBody = System.IO.File.ReadAllText(System.Web.Hosting.HostingEnvironment.MapPath(emailTemplatePath));
-                var Body = EmailBody.Replace(" #PolicyNumber#", policy.PolicyNumber).Replace("##path##", filepath+ agentLogoDeatils.LogoPath)
-                .Replace("#TodayDate#", DateTime.Now.ToShortDateString()).Replace("#FirstName#", customer.FirstName)
-                .Replace("#LastName#", customer.LastName).Replace("#Address1#", customer.AddressLine1)
-                .Replace("#AgentFirstName#", agentDetials.FirstName).Replace("#AgentLastName#", agentDetials.LastName)
-                 .Replace("#AgentAddress1#", agentDetials.AddressLine1).Replace("#AgentCity#", agentDetials.City)
-                  .Replace("#AgentPhone#", agentDetials.PhoneNumber).Replace("#AgentWhatsapp#", agentDetials.AgentWhatsapp)
-                  .Replace("#AgentEmail#", agentDetialsByUserId.UserName).
-                Replace("#Address2#", customer.AddressLine2).Replace("#Email#", user.Email).Replace("#change#", callbackUrl);
-                //var _yAtter = "~/Pdf/14809 Gene Insure Motor Policy Book.pdf";
-                var attachementFile1 = MiscellaneousService.EmailPdf(Body, policy.CustomerId, policy.PolicyNumber, "Agent WelCome Letter ");
-                List<string> _attachements = new List<string>();
-                _attachements.Add(attachementFile1);
-                //_attachements.Add(_yAtter);
+            string EmailBody = System.IO.File.ReadAllText(System.Web.Hosting.HostingEnvironment.MapPath(emailTemplatePath));
+            var Body = EmailBody.Replace(" #PolicyNumber#", policy.PolicyNumber).Replace("##path##", filepath + agentLogoDeatils.LogoPath)
+            .Replace("#TodayDate#", DateTime.Now.ToShortDateString()).Replace("#FirstName#", customer.FirstName)
+            .Replace("#LastName#", customer.LastName).Replace("#Address1#", customer.AddressLine1)
+            .Replace("#AgentFirstName#", agentDetials.FirstName).Replace("#AgentLastName#", agentDetials.LastName)
+             .Replace("#AgentAddress1#", agentDetials.AddressLine1).Replace("#AgentCity#", agentDetials.City)
+              .Replace("#AgentPhone#", agentDetials.PhoneNumber).Replace("#AgentWhatsapp#", agentDetials.AgentWhatsapp)
+              .Replace("#AgentEmail#", agentDetialsByUserId.UserName).
+            Replace("#Address2#", customer.AddressLine2).Replace("#Email#", user.Email).Replace("#change#", callbackUrl);
+            //var _yAtter = "~/Pdf/14809 Gene Insure Motor Policy Book.pdf";
+            var attachementFile1 = MiscellaneousService.EmailPdf(Body, policy.CustomerId, policy.PolicyNumber, "Agent WelCome Letter ");
+            List<string> _attachements = new List<string>();
+            _attachements.Add(attachementFile1);
+            //_attachements.Add(_yAtter);
 
 
-                if (customer.IsCustomEmail) // if customer has custom email
-                {
-                    objEmailService.SendEmail(LoggedUserEmail(), "", "", "Account Creation", Body, _attachements);
-                }
-                else
-                {
-                    objEmailService.SendEmail(user.Email, "", "", "Account Creation", Body, _attachements);
-                }
+            if (customer.IsCustomEmail) // if customer has custom email
+            {
+                objEmailService.SendEmail(LoggedUserEmail(), "", "", "Account Creation", Body, _attachements);
+            }
+            else
+            {
+                objEmailService.SendEmail(user.Email, "", "", "Account Creation", Body, _attachements);
+            }
 
-                string body = "Hello " + customer.FirstName + "\nWelcome to " + agentDetials.FirstName + " " + agentDetials.LastName +"." + " Policy number is : " + policy.PolicyNumber + "\nUsername is : " + user.Email + "\nYour Password : Geneinsure@123" + "\nPlease reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>" + "\nThank you.";
-                var result = await objsmsService.SendSMS(customer.Countrycode.Replace("+", "") + user.PhoneNumber, body);
+            string body = "Hello " + customer.FirstName + "\nWelcome to " + agentDetials.FirstName + " " + agentDetials.LastName + "." + " Policy number is : " + policy.PolicyNumber + "\nUsername is : " + user.Email + "\nYour Password : Geneinsure@123" + "\nPlease reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>" + "\nThank you.";
+            var result = await objsmsService.SendSMS(customer.Countrycode.Replace("+", "") + user.PhoneNumber, body);
 
-                SmsLog objsmslog = new SmsLog()
-                {
-                    Sendto = user.PhoneNumber,
-                    Body = body,
-                    Response = result,
-                    CreatedBy = customer.Id,
-                    CreatedOn = DateTime.Now
-                };
+            SmsLog objsmslog = new SmsLog()
+            {
+                Sendto = user.PhoneNumber,
+                Body = body,
+                Response = result,
+                CreatedBy = customer.Id,
+                CreatedOn = DateTime.Now
+            };
 
-                InsuranceContext.SmsLogs.Insert(objsmslog);
+            InsuranceContext.SmsLogs.Insert(objsmslog);
             //}
 
             //var data = (List<Item>)Session["itemData"];
@@ -2402,7 +2401,7 @@ namespace InsuranceClaim.Controllers
                  .Replace("#AgentAddress1#", agentDetials.AddressLine1).Replace("#AgentCity#", agentDetials.City)
                   .Replace("#AgentPhone#", agentDetials.PhoneNumber).Replace("#AgentWhatsapp#", agentDetials.AgentWhatsapp)
                   .Replace("#AgentEmail#", agentDetialsByUserId.UserName)
-                .Replace("##path##", filepath+ agentLogoDeatils.LogoPath).Replace("#FirstName#", customer.FirstName)
+                .Replace("##path##", filepath + agentLogoDeatils.LogoPath).Replace("#FirstName#", customer.FirstName)
                 .Replace("#LastName#", customer.LastName)
                 .Replace("#AccountName#", customer.FirstName + ", " + customer.LastName)
                 .Replace("#Address1#", customer.AddressLine1).Replace("#Address2#", customer.AddressLine2)
@@ -2437,7 +2436,7 @@ namespace InsuranceClaim.Controllers
             #region Send Payment SMS
 
             // done
-            string Recieptbody = "Hello " + customer.FirstName + "\nWelcome to "+agentDetials.FirstName + " " +agentDetials.LastName +". Your payment of" + "$" + Convert.ToString(summaryDetail.AmountPaid) + " has been received. Policy number is : " + policy.PolicyNumber + "\n" + "\nThanks.";
+            string Recieptbody = "Hello " + customer.FirstName + "\nWelcome to " + agentDetials.FirstName + " " + agentDetials.LastName + ". Your payment of" + "$" + Convert.ToString(summaryDetail.AmountPaid) + " has been received. Policy number is : " + policy.PolicyNumber + "\n" + "\nThanks.";
             var Recieptresult = await objsmsService.SendSMS(customer.Countrycode.Replace("+", "") + user.PhoneNumber, Recieptbody);
 
             SmsLog objRecieptsmslog = new SmsLog()
@@ -2553,7 +2552,7 @@ namespace InsuranceClaim.Controllers
                  .Replace("#AgentAddress1#", agentDetials.AddressLine1).Replace("#AgentCity#", agentDetials.City)
                   .Replace("#AgentPhone#", agentDetials.PhoneNumber).Replace("#AgentWhatsapp#", agentDetials.AgentWhatsapp)
                   .Replace("#AgentEmail#", agentDetialsByUserId.UserName).
-                Replace("##paht##", filepath+agentLogoDeatils.LogoPath).Replace("##Cellnumber##", user.PhoneNumber)
+                Replace("##paht##", filepath + agentLogoDeatils.LogoPath).Replace("##Cellnumber##", user.PhoneNumber)
                 .Replace("##currencyName##", currencyName)
                 .Replace("##QRpath##", path)
                 .Replace("##FirstName##", customer.FirstName).Replace("##LastName##", customer.LastName).Replace("##Email##", user.Email)

@@ -1,6 +1,5 @@
 ﻿using SV.Domain.Code;
 using System;
-using System.Configuration;
 using System.Net;
 using System.Reflection;
 
@@ -34,8 +33,8 @@ namespace Insurance.Domain.Code
             {
                 if (!_initHasRun)
                 {
-                    _initHasRun = true;                  
-                   
+                    _initHasRun = true;
+
 
                     // set system wide severity
                     Logger.Instance.Severity = LogSeverity.Info;
@@ -47,8 +46,8 @@ namespace Insurance.Domain.Code
                     Logger.Instance.Attach(logConsole);
 
                     // send log messages to a file
-                 
-                  
+
+
 
                     Logger.Instance.Info("Up and running ==> " + Assembly.GetExecutingAssembly().GetName().Version.ToString());
                     Logger.Instance.Info("Config: " + InsuranceContext.ConnectionString);

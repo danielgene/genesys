@@ -1,14 +1,11 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace SV.Domain.Code
 {
     // singleton logger class through which all log events are processed.
-    
+
     // ** Design Patterns: Singleton, Observer.
-    
+
     public sealed class Logger
     {
         // delegate event handler that hooks up requests.
@@ -21,13 +18,13 @@ namespace SV.Domain.Code
 
         #region The Singleton definition
 
-        
+
         // the one and only Singleton Logger instance. 
-        
+
         private static readonly Logger instance = new Logger();
 
         // private constructor. Initializes default severity to "Error".
-        
+
         private Logger()
         {
             // default severity is Error level
@@ -35,9 +32,9 @@ namespace SV.Domain.Code
             Severity = LogSeverity.Error;
         }
 
-        
+
         // gets the instance of the singleton logger object
-        
+
         public static Logger Instance
         {
             get { return instance; }
@@ -55,9 +52,9 @@ namespace SV.Domain.Code
         private bool isError;
         private bool isFatal;
 
-        
+
         // gets and sets the severity level of logging activity.
-        
+
         public LogSeverity Severity
         {
             get { return severity; }
@@ -77,9 +74,9 @@ namespace SV.Domain.Code
             }
         }
 
-       
+
         // log a message when severity level is "Debug" or higher.
-        
+
         public void Debug(string message)
         {
             if (isDebug)
@@ -87,17 +84,17 @@ namespace SV.Domain.Code
         }
 
         // log a message when severity level is "Debug" or higher.
-        
+
         public string Debug(string message, Exception exception)
         {
-			string ev = "";
+            string ev = "";
             if (isDebug)
                 ev = OnLog(new LogEventArgs(LogSeverity.Debug, message, exception, DateTime.Now));
-			
-			return ev;
+
+            return ev;
         }
 
-        
+
         // log a message when severity level is "Info" or higher.
 
         public void Info(string message)
@@ -106,16 +103,16 @@ namespace SV.Domain.Code
                 Info(message, null);
         }
 
-       
+
         // log a message when severity level is "Info" or higher.
 
         public string Info(string message, Exception exception)
         {
-			string ev = "";
+            string ev = "";
             if (isInfo)
                 ev = OnLog(new LogEventArgs(LogSeverity.Info, message, exception, DateTime.Now));
 
-			return ev;
+            return ev;
         }
 
         // log a message when severity level is "Warning" or higher.
@@ -126,21 +123,21 @@ namespace SV.Domain.Code
                 Warning(message, null);
         }
 
-        
+
         // log a message when severity level is "Warning" or higher.
 
         public string Warning(string message, Exception exception)
         {
-			string ev = "";
+            string ev = "";
             if (isWarning)
                 ev = OnLog(new LogEventArgs(LogSeverity.Warning, message, exception, DateTime.Now));
 
-			return ev;
+            return ev;
         }
 
-        
+
         // log a message when severity level is "Error" or higher.
-        
+
         public void Error(string message)
         {
             if (isError)
@@ -148,19 +145,19 @@ namespace SV.Domain.Code
         }
 
         // log a message when severity level is "Error" or higher.
-        
+
         public string Error(string message, Exception exception)
         {
-			string ev = "";
+            string ev = "";
             if (isError)
                 ev = OnLog(new LogEventArgs(LogSeverity.Error, message, exception, DateTime.Now));
 
-			return ev;
+            return ev;
         }
 
-        
+
         // log a message when severity level is "Fatal"
-        
+
         public void Fatal(string message)
         {
             if (isFatal)
@@ -171,46 +168,46 @@ namespace SV.Domain.Code
 
         public string Fatal(string message, Exception exception)
         {
-		    string ev = "";
+            string ev = "";
             if (isFatal)
                 ev = OnLog(new LogEventArgs(LogSeverity.Fatal, message, exception, DateTime.Now));
-			
-			return ev;
+
+            return ev;
         }
 
         // invokes the Log event
 
         public string OnLog(LogEventArgs e)
         {
-			string str = "";
+            string str = "";
             if (Log != null)
             {
-				if(e != null)
-				{
-					if(e.Exception != null)
-					{
-						str = e.ToString();
-						Log(this, new LogEventArgs(e.Severity, str, null, e.Date));
-					}
-					else
-					{
-						str = e.Message;
-					}
-				}
+                if (e != null)
+                {
+                    if (e.Exception != null)
+                    {
+                        str = e.ToString();
+                        Log(this, new LogEventArgs(e.Severity, str, null, e.Date));
+                    }
+                    else
+                    {
+                        str = e.Message;
+                    }
+                }
 
-				Log(this, e);
-			}
-			return str;
+                Log(this, e);
+            }
+            return str;
         }
 
         // attach a listening observer logging device to logger
-        
+
         public void Attach(ILog observer)
         {
             Log += observer.Log;
         }
 
-        
+
         // detach a listening observer logging device from logger
 
         public void Detach(ILog observer)

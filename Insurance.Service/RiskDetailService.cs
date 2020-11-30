@@ -1,12 +1,10 @@
-﻿using InsuranceClaim.Models;
+﻿using AutoMapper;
+using Insurance.Domain;
+using InsuranceClaim.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
-using Insurance.Domain;
 using System.Configuration;
+using System.Linq;
 
 namespace Insurance.Service
 {

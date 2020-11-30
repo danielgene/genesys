@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InsuranceClaim.Models
 {
-  public  class EndorsementCustomerModel
+    public class EndorsementCustomerModel
     {
         public int Id { get; set; }
         public decimal CustomerId { get; set; }
@@ -74,7 +70,7 @@ namespace InsuranceClaim.Models
         public string UserRoleName { get; set; }
         public int SummaryId { get; set; }
         public bool? IsCompleted { get; set; }
-        public int? PrimeryCustomerId { get; set; } 
+        public int? PrimeryCustomerId { get; set; }
         public bool IsEmailUpdated { get; set; }
         public string UserEmail { get; set; }
     }

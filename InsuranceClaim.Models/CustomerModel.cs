@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 
@@ -47,7 +42,7 @@ namespace InsuranceClaim.Models
         public string City { get; set; }
         [Display(Name = "National Identification Number")]
         [Required(ErrorMessage = " Please Enter National Identification Number")]
-       
+
         // [RegularExpression(@"^([0-9]{2}-[0-9]{6,7}[a-zA-Z]{1}[0-9]{2})$", ErrorMessage = "Not a Valid Identification Number")]        
         public string NationalIdentificationNumber { get; set; }
         [Display(Name = "Zip Code")]
@@ -82,7 +77,7 @@ namespace InsuranceClaim.Models
 
         public string AgentLogo { get; set; }
 
-        public string AgentWhatsapp {get; set;}
+        public string AgentWhatsapp { get; set; }
 
         public string AgentBranch { get; set; }
 
@@ -115,7 +110,7 @@ namespace InsuranceClaim.Models
 
         [Display(Name = "Location")]
         public int WorkTypeId { get; set; }
-      
+
         public string WorkDesc { get; set; }
 
 

@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using InsuranceClaim.Models;
+﻿using AutoMapper;
 using Insurance.Domain;
-using AutoMapper;
 using Insurance.Service;
+using InsuranceClaim.Models;
+using System;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace InsuranceClaim.Controllers
 {
@@ -29,7 +27,7 @@ namespace InsuranceClaim.Controllers
                 dbModel.CreatedOn = DateTime.Now;
                 dbModel.IsDeleted = true;
                 InsuranceContext.ServiceProviders.Insert(dbModel);
-                return RedirectToAction("ProvidersList");              
+                return RedirectToAction("ProvidersList");
             }
             return View();
         }
@@ -46,23 +44,23 @@ namespace InsuranceClaim.Controllers
 
             //var servicetype = InsuranceContext.ServiceProviderTypes.All().ToList();
 
-            var  objList = (from _service in InsuranceContext.ServiceProviders.All().ToList()
-                        join _servicetype in InsuranceContext.ServiceProviderTypes.All().ToList()
-                        on _service.ServiceProviderType equals _servicetype.Id
-                        where _service.IsDeleted == true 
+            var objList = (from _service in InsuranceContext.ServiceProviders.All().ToList()
+                           join _servicetype in InsuranceContext.ServiceProviderTypes.All().ToList()
+                           on _service.ServiceProviderType equals _servicetype.Id
+                           where _service.IsDeleted == true
                            select new ServiceProviderModel
-                        {
+                           {
 
-                            ServiceProviderName = _service.ServiceProviderName,
-                            ServiceProviderType = Convert.ToString(_servicetype.ProviderType),
-                            ServiceProviderContactDetails = _service.ServiceProviderContactDetails,
-                            ServiceProviderFees = _service.ServiceProviderFees,
-                           
-                            Id = _service.Id
+                               ServiceProviderName = _service.ServiceProviderName,
+                               ServiceProviderType = Convert.ToString(_servicetype.ProviderType),
+                               ServiceProviderContactDetails = _service.ServiceProviderContactDetails,
+                               ServiceProviderFees = _service.ServiceProviderFees,
+
+                               Id = _service.Id
 
 
-                        }
-                         ).ToList().OrderByDescending(c=>c.Id);
+                           }
+                         ).ToList().OrderByDescending(c => c.Id);
             return View(objList);
         }
 

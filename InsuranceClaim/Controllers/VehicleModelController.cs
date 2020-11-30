@@ -4,7 +4,6 @@ using InsuranceClaim.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace InsuranceClaim.Controllers
@@ -195,8 +194,8 @@ namespace InsuranceClaim.Controllers
 
         public ActionResult DeleteModel(int id)
         {
-          
-           var modelDetials = InsuranceContext.VehicleModels.Single(id);
+
+            var modelDetials = InsuranceContext.VehicleModels.Single(id);
 
             if (modelDetials != null)
             {

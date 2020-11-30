@@ -7,8 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 
 namespace Insurance.Service
@@ -167,7 +165,7 @@ namespace Insurance.Service
             catch (Exception ex)
             {
                 Insurance.Service.EmailService service1 = new Insurance.Service.EmailService();
-                service1.WriteLog("email pdf: "+ ex.Message);
+                service1.WriteLog("email pdf: " + ex.Message);
             }
 
             sr.Close();

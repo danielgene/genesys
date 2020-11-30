@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InsuranceClaim.Models
 {
-   public class StampDutyReportModels
+    public class StampDutyReportModels
     {
         public string Customer_Name { get; set; }
         public string Policy_Number { get; set; }
@@ -24,7 +20,7 @@ namespace InsuranceClaim.Models
     {
         public List<StampDutyReportModels> ListStampDutyReportdata { get; set; }
         [Required(ErrorMessage = "Please Enter Start Date.")]
-        public string  FromDate { get; set; }
+        public string FromDate { get; set; }
         [Required(ErrorMessage = "Please Enter End Date.")]
         public string EndDate { get; set; }
     }

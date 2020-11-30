@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Insurance.Domain.Domain
 {
-   public class ServiceProviderPaymentHistory : Entity<ServiceProviderPaymentHistory>
+    public class ServiceProviderPaymentHistory : Entity<ServiceProviderPaymentHistory>
     {
         public int Id { get; set; }
         public int ClaimRegistrationId { get; set; }

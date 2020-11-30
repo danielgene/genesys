@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace InsuranceClaim.Models
+﻿namespace InsuranceClaim.Models
 {
-   public class WebCustomerModel
+    public class WebCustomerModel
     {
         public CustomerModel Customer { get; set; }
 

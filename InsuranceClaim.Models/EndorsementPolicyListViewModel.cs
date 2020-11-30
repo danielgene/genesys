@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InsuranceClaim.Models
 {
-   public class EndorsementPolicyListViewModel
+    public class EndorsementPolicyListViewModel
     {
         public List<VehicleReinsuranceViewModel> Vehicles { get; set; }
         public string PolicyNumber { get; set; }
@@ -54,6 +51,6 @@ namespace InsuranceClaim.Models
         public decimal Premium { get; set; }
         public bool isActive { get; set; }
 
-      
+
     }
 }

@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InsuranceClaim.Models
 {
-   public class Extension
+    public class Extension
     {
 
         public static List<T> ConvertDataTable<T>(DataTable dt)
@@ -40,7 +37,7 @@ namespace InsuranceClaim.Models
                         try
                         {
                             var convertedValue = GetValueByDataType(pro.PropertyType, dr[column.ColumnName]);
-                           // pro.SetValue(obj, convertedValue, null);
+                            // pro.SetValue(obj, convertedValue, null);
 
                             SetValue(obj, column.ColumnName, convertedValue);
 

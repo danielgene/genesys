@@ -1,12 +1,9 @@
 ﻿
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace SV.Domain.Code
 {
-    
+
     // writes log events to the diagnostic trace
     // GoF Design Pattern: Observer
 
@@ -19,7 +16,7 @@ namespace SV.Domain.Code
             string message = "[" + e.Date.ToString() + "] " +
                 e.SeverityString + ": " + e.Message;
 
-            Console.WriteLine(message); 
+            Console.WriteLine(message);
         }
     }
 }

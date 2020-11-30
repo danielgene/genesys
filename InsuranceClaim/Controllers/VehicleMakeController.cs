@@ -4,7 +4,6 @@ using InsuranceClaim.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace InsuranceClaim.Controllers
@@ -65,7 +64,7 @@ namespace InsuranceClaim.Controllers
         public ActionResult VehicleMakeList()
         {
 
-          
+
 
             var makelist = InsuranceContext.VehicleMakes.All(where: "IsActive = 'True' or IsActive is Null").OrderByDescending(x => x.Id).ToList();
             return View(makelist);
@@ -89,9 +88,9 @@ namespace InsuranceClaim.Controllers
                     //var data = Mapper.Map<VehiclesMakeModel, VehicleMake>(model);
                     var data = InsuranceContext.VehicleMakes.Single(where: $"Id = {makeid}");
 
-                    if(data!=null)
+                    if (data != null)
                     {
-                        if(!CheckMakeExist(data.MakeDescription, model.MakeDescription))
+                        if (!CheckMakeExist(data.MakeDescription, model.MakeDescription))
                         {
                             TempData["errorMsg"] = "Make description already exist, please try again.";
                             return View(model);
@@ -118,7 +117,7 @@ namespace InsuranceClaim.Controllers
         private bool CheckMakeExist(string oldMake, string newMake)
         {
 
-            if(oldMake== newMake)
+            if (oldMake == newMake)
             {
                 return true;
             }
@@ -127,7 +126,7 @@ namespace InsuranceClaim.Controllers
 
                 var dbVehicalMake = InsuranceContext.VehicleMakes.Single(where: $"MakeDescription = '" + newMake + "'");
 
-                if(dbVehicalMake!=null)
+                if (dbVehicalMake != null)
                 {
                     return false;
                 }
@@ -142,11 +141,11 @@ namespace InsuranceClaim.Controllers
         {
             var makeDetials = InsuranceContext.VehicleMakes.Single(id);
 
-            if(makeDetials!=null)
+            if (makeDetials != null)
             {
                 var vehicelDetials = InsuranceContext.VehicleDetails.Single(where: $"MakeId='{makeDetials.MakeCode}'");
 
-                if(vehicelDetials==null)
+                if (vehicelDetials == null)
                 {
                     string query = $"update VehicleMake set IsActive =0 where Id={id}";
                     InsuranceContext.VehicleMakes.Execute(query);
@@ -158,7 +157,7 @@ namespace InsuranceClaim.Controllers
 
             }
 
-            
+
 
             return RedirectToAction("VehicleMakeList");
         }

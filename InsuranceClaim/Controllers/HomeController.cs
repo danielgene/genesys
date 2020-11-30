@@ -1,14 +1,5 @@
-﻿using Insurance.Domain;
-using InsuranceClaim.Models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿using System.Data;
 using System.Data.SqlClient;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Web;
 using System.Web.Mvc;
 
 namespace InsuranceClaim.Controllers
@@ -19,7 +10,7 @@ namespace InsuranceClaim.Controllers
         {
             return View();
         }
- 
+
         public ActionResult About(string res = "")
         {
             if (res != "")
@@ -53,14 +44,14 @@ namespace InsuranceClaim.Controllers
             //Library.WriteErrorLog("row count: " + table.Rows.Count);    
         }
 
-     
+
     }
 
     //public class PartnerModel
     //{
     //    public int Id { get; set; }
     //    public string PartnerName { get; set; }
-    
+
     //    public bool Status { get; set; }
     //}
 

@@ -1,10 +1,3 @@
-	
-using System;
-using System.Linq;
-using System.Text;
-using System.Data;
-using System.Collections.Generic;
-
 namespace Insurance.Domain
 {
     // ############################################################################
@@ -18,10 +11,10 @@ namespace Insurance.Domain
     // # if the code is regenerated.
     // #
     // ############################################################################
-	
-	// Insurance Unit-of-Work
 
-	public partial class InsuranceUnitOfWork : UnitOfWork
+    // Insurance Unit-of-Work
+
+    public partial class InsuranceUnitOfWork : UnitOfWork
     {
         public InsuranceUnitOfWork() : base(new InsuranceDb()) { }
     }

@@ -1,25 +1,21 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
+﻿using AutoMapper;
+using Insurance.Domain;
+using Insurance.Service;
+using InsuranceClaim.Models;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using InsuranceClaim.Models;
-using Insurance.Domain;
-using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 using System.Collections.Generic;
-using AutoMapper;
 using System.Configuration;
-using static InsuranceClaim.Controllers.CustomerRegistrationController;
-using InsuranceClaim.Controllers;
+using System.Globalization;
 using System.IO;
-using Insurance.Service;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
 using System.Web.Configuration;
-using System.Drawing;
+using System.Web.Mvc;
 
 namespace InsuranceClaim.Controllers
 {
@@ -2122,12 +2118,12 @@ namespace InsuranceClaim.Controllers
                     paymentStatus = "Paid";
 
 
-              
-                if(recieptDetail!=null && !string.IsNullOrEmpty(renewPolicyNum))
+
+                if (recieptDetail != null && !string.IsNullOrEmpty(renewPolicyNum))
                 {
                     var recieptDetailForRenew = recieptList.FirstOrDefault(c => c.RenewPolicyNumber == renewPolicyNum);
 
-                   if(recieptDetailForRenew!=null)
+                    if (recieptDetailForRenew != null)
                         paymentStatus = "Paid";
                 }
 
@@ -6149,7 +6145,51 @@ namespace InsuranceClaim.Controllers
             return InsuranceContext.PaymentMethods.All(where: "Id=1").ToList();
         }
 
+        public ActionResult ReceiptCancelation()
+        {
+            ReceiptCancelationModel model = new ReceiptCancelationModel();
+            List<ReceiptAndPayment> listReceipt = new List<ReceiptAndPayment>();
+            string querySQL = "select * from ReceiptAndPayment where type='reciept' ";
+            listReceipt = InsuranceContext.Query(querySQL).Select(x => new ReceiptAndPayment
+            {
+                Id = x.Id,
+                Amount = x.Amount,
+                policyId= x.policyId,
+                paymentMethod = x.paymentMethod,
+                policyNumber = x.policyNumber,
+                CreatedOn = x.CreatedOn,
+                reference = x.reference,
+                currency = x.currency
 
+
+            }).ToList();
+
+            model.receiptAndPayments = listReceipt;
+            return View(model); ;
+        }
+
+        public ActionResult ReceiptSearchCancelation(ReceiptCancelationModel model)
+        {
+            //ReceiptCancelationModel model = new ReceiptCancelationModel();
+            List<ReceiptAndPayment> listReceipt = new List<ReceiptAndPayment>();
+            string querySQL = "select * from ReceiptAndPayment where type='reciept' where CreatedOn BETWEEN "+model.FromDate +" AND "+model.EndDate +" ";
+            listReceipt = InsuranceContext.Query(querySQL).Select(x => new ReceiptAndPayment
+            {
+                Id = x.Id,
+                Amount = x.Amount,
+                policyId = x.policyId,
+                paymentMethod = x.paymentMethod,
+                policyNumber = x.policyNumber,
+                CreatedOn = x.CreatedOn,
+                reference = x.reference,
+                currency = x.currency
+
+
+            }).ToList();
+
+            model.receiptAndPayments = listReceipt;
+            return View("ReceiptCancelation", model); ;
+        }
 
     }
 }

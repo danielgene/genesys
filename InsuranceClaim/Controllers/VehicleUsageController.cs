@@ -5,8 +5,6 @@ using InsuranceClaim.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Web;
@@ -50,11 +48,11 @@ namespace InsuranceClaim.Controllers
             {
                 var id = item.CreatedBy;
                 var customer = InsuranceContext.Customers.All(where: $"Id = '{id}'").FirstOrDefault();
-                if(customer!=null)
+                if (customer != null)
                 {
                     item.CreatedByName = textInfo.ToTitleCase(customer.FirstName.ToLower()) + " " + textInfo.ToTitleCase(customer.LastName.ToLower());
                 }
-                
+
             }
             return View(InflationFactorList);
         }
@@ -124,13 +122,13 @@ namespace InsuranceClaim.Controllers
             var data = Mapper.Map<VehicleUsageModel, VehicleUsage>(model);
             InsuranceContext.VehicleUsages.Update(data);
 
-/*            Debug.WriteLine(ModelState.IsValid);
-            if (ModelState.IsValid)
-            {
+            /*            Debug.WriteLine(ModelState.IsValid);
+                        if (ModelState.IsValid)
+                        {
 
 
-               
-            }*/
+
+                        }*/
 
             return RedirectToAction("VehicleUsageList");
         }

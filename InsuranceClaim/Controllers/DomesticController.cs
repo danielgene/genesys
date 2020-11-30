@@ -272,9 +272,9 @@ namespace InsuranceClaim.Controllers
                 //else
                 //    model.PaymentMethodId = 2;
 
-           
+
                 model.PaymentMethodId = 1;
-              
+
 
                 model.PaymentTermId = 1;
                 model.ReceiptNumber = "";
@@ -641,7 +641,7 @@ namespace InsuranceClaim.Controllers
                                 policy.CreatedBy = customer.Id;
                                 policy.CreatedOn = DateTime.Now;
                                 policy.CurrencyId = 1;
-                               // InsuranceContext.PolicyDetails.Insert(policy);
+                                // InsuranceContext.PolicyDetails.Insert(policy);
                                 _policyService.SavePolicy(policy);
 
                                 Session["PolicyData"] = policy;
@@ -664,8 +664,8 @@ namespace InsuranceClaim.Controllers
                                 policydata.TransactionDate = null;
                                 policy.ModifiedBy = customer.Id;
                                 policy.ModifiedOn = DateTime.Now;
-                               // InsuranceContext.PolicyDetails.Update(policydata);
-                               _policyService.UpdatePolicy(policy);
+                                // InsuranceContext.PolicyDetails.Update(policydata);
+                                _policyService.UpdatePolicy(policy);
                             }
                         }
 
@@ -678,10 +678,10 @@ namespace InsuranceClaim.Controllers
                             {
                                 var _item = item;
 
-                                
-                              var   vehicelDetails = _domesticService.GetVehicleDetail(policy.Id);
 
-                                if (vehicelDetails != null && vehicelDetails.Id!=0)
+                                var vehicelDetails = _domesticService.GetVehicleDetail(policy.Id);
+
+                                if (vehicelDetails != null && vehicelDetails.Id != 0)
                                 {
                                     item.Id = vehicelDetails.Id;
                                 }
@@ -1122,7 +1122,7 @@ namespace InsuranceClaim.Controllers
 
             var policy = _policyService.GetPolicyDetailById(vehicle.PolicyId);
             // Generate QR Code
-           // var path = SaveQRCode(policy.PolicyNumber);
+            // var path = SaveQRCode(policy.PolicyNumber);
             var customer = _userService.GetCustomerDetailById(summaryDetail.CustomerId);
             var product = _riskDetailService.GetProductDetailsById(vehicle.ProductId);
             var paymentInformations = _domesticService.GetPaymentInformationById(id);
@@ -1142,7 +1142,7 @@ namespace InsuranceClaim.Controllers
             objSaveDetailListModel.DebitNote = summaryDetail.DebitNote;
             objSaveDetailListModel.ProductId = product.Id;
             objSaveDetailListModel.PaymentType = PaymentMethod;
-           // objSaveDetailListModel.InvoiceId = Guid.Parse(invoiceNumber==null);
+            // objSaveDetailListModel.InvoiceId = Guid.Parse(invoiceNumber==null);
             objSaveDetailListModel.CreatedBy = customer.Id;
             objSaveDetailListModel.CreatedOn = DateTime.Now;
             objSaveDetailListModel.InvoiceNumber = policy.PolicyNumber;
@@ -1363,7 +1363,7 @@ namespace InsuranceClaim.Controllers
             //    .Replace("##PremiumDue##", Convert.ToString(summaryDetail.TotalPremium))
             //    .Replace("##PostalAddress##", customer.Zipcode).Replace("##ExcessBuyBackAmount##", Convert.ToString(ExcessBuyBackAmount)).Replace("##MedicalExpenses##", Convert.ToString(MedicalExpensesAmount))
             //    .Replace("##PassengerAccidentCover##", Convert.ToString(PassengerAccidentCoverAmount)).Replace("##RoadsideAssistance##", Convert.ToString(RoadsideAssistanceAmount));
-                
+
 
             //#region Invoice PDF
             //var attacehmetnFile = MiscellaneousService.EmailPdf(Bodyy, policy.CustomerId, policy.PolicyNumber, "Schedule-motor");

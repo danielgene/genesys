@@ -7,7 +7,6 @@ using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace InsuranceClaim.Controllers
@@ -30,7 +29,7 @@ namespace InsuranceClaim.Controllers
             var Lawyersprovider = 0.00m;
             var Medicalprovider = 0.00m;
 
-           
+
 
             var ePaymentDetail = from ePayeeBankDetails e in Enum.GetValues(typeof(ePayeeBankDetails))
                                  select new
@@ -171,7 +170,7 @@ namespace InsuranceClaim.Controllers
 
 
 
-            model.TotalAmountLeftToPayed = Convert.ToString(claimRegistrationProvider- _excessAmount);
+            model.TotalAmountLeftToPayed = Convert.ToString(claimRegistrationProvider - _excessAmount);
 
             // var providerList = InsuranceContext.ClaimRegistrationProviderDetials.All(where : "ClaimRegistrationId=" + claimAdjustment).ToList();
 
@@ -184,7 +183,7 @@ namespace InsuranceClaim.Controllers
 
             decimal fee = providerFee;
 
-            if (providerType== "Repairers")
+            if (providerType == "Repairers")
             {
                 fee = providerFee - excessAmount;
                 _excessAmount = excessAmount;
@@ -287,7 +286,7 @@ namespace InsuranceClaim.Controllers
 
 
             //06_june_2019
-            claimAdjustment.PhoneNumber = model.PhoneNumber; 
+            claimAdjustment.PhoneNumber = model.PhoneNumber;
             claimAdjustment.PayeeBankDetails = model.PayeeBankDetails;
             InsuranceContext.ClaimAdjustments.Update(claimAdjustment);
 

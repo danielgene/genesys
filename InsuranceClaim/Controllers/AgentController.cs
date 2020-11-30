@@ -1,4 +1,6 @@
-﻿using Insurance.Domain;
+﻿
+
+using Insurance.Domain;
 using Insurance.Service;
 using InsuranceClaim.Models;
 using Microsoft.AspNet.Identity;
@@ -13,7 +15,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
-using static InsuranceClaim.Controllers.CustomerRegistrationController;
+
 
 namespace InsuranceClaim.Controllers
 {
@@ -125,7 +127,7 @@ namespace InsuranceClaim.Controllers
                 IsCustomEmail = x.IsCustomEmail == null ? false : Convert.ToBoolean(x.IsCustomEmail),
                 EmailAddress = x.Email,
                 AgentLogo = x.LogoPath,
-                AgentWhatsapp =x.AgentWhatsapp,
+                AgentWhatsapp = x.AgentWhatsapp,
                 // CompanyName = x.CompanyName,
                 // CompanyEmail = x.CompanyEmail,
                 //  CompanyAddress = x.CompanyAddress,
@@ -154,7 +156,7 @@ namespace InsuranceClaim.Controllers
 
             string branchName = "";
 
-            if(branchIds!=null)
+            if (branchIds != null)
             {
                 var splitBranch = branchIds.Split(',');
 
@@ -172,7 +174,7 @@ namespace InsuranceClaim.Controllers
 
                 }
             }
-           
+
 
             return branchName;
         }
@@ -255,7 +257,7 @@ namespace InsuranceClaim.Controllers
                 ViewBag.Branches = InsuranceContext.Branches.All();
 
 
-                if(Corporate=="")
+                if (Corporate == "")
                 {
                     model.IsCorporate = true;
                     model.EmailAddress = model.CompanyEmail;
@@ -274,7 +276,7 @@ namespace InsuranceClaim.Controllers
                     model.City = model.CompanyCity;
 
                     model.CompanyBusinessId = model.CompanyBusinessId;
-                    
+
                 }
 
 
@@ -306,10 +308,10 @@ namespace InsuranceClaim.Controllers
                     cstmr.CustomerId = model.CustomerId;
                     cstmr.AddressLine1 = model.AddressLine1;
                     cstmr.AddressLine2 = model.AddressLine2;
-                    cstmr.City = model.City;           
+                    cstmr.City = model.City;
                     cstmr.AgentBranch = model.HdnBrach;
                     cstmr.Countrycode = model.CountryCode;
-                    cstmr.DateOfBirth = model.DateOfBirth == null? DateTime.Now : model.DateOfBirth;
+                    cstmr.DateOfBirth = model.DateOfBirth == null ? DateTime.Now : model.DateOfBirth;
                     cstmr.FirstName = model.FirstName;
                     cstmr.LastName = model.LastName;
                     cstmr.NationalIdentificationNumber = model.NationalIdentificationNumber;
@@ -327,7 +329,7 @@ namespace InsuranceClaim.Controllers
                     cstmr.AgentWhatsapp = model.AgentWhatsapp;
 
 
-                    if(model.IsCorporate)
+                    if (model.IsCorporate)
                     {
                         cstmr.IsCorporate = true;
                         cstmr.CompanyName = model.CompanyName;
@@ -372,7 +374,7 @@ namespace InsuranceClaim.Controllers
             {
                 string _FileName = Path.GetFileName(file.FileName);
                 string logoPath = Path.Combine(Server.MapPath("~/AgentLogo"), _FileName);
-                path = "/AgentLogo/"+_FileName;
+                path = "/AgentLogo/" + _FileName;
 
                 file.SaveAs(logoPath);
             }
@@ -382,9 +384,9 @@ namespace InsuranceClaim.Controllers
         public void SaveAgentLogo(int customerId, string imagePath)
         {
 
-            var agentLogoDetails = InsuranceContext.AgentLogos.Single(where : "CustomerId=" + customerId);
+            var agentLogoDetails = InsuranceContext.AgentLogos.Single(where: "CustomerId=" + customerId);
 
-            if(agentLogoDetails == null)
+            if (agentLogoDetails == null)
             {
                 AgentLogo agentLogo = new AgentLogo { CustomerId = customerId, LogoPath = imagePath, CreatedOn = DateTime.Now };
                 InsuranceContext.AgentLogos.Insert(agentLogo);
@@ -457,7 +459,7 @@ namespace InsuranceClaim.Controllers
 
                 // for corporate
 
-                if(data.IsCorporate)
+                if (data.IsCorporate)
                 {
                     // data.EmailAddress = model.CompanyEmail;
                     obj.CompanyEmail = data.CompanyEmail;
@@ -600,12 +602,12 @@ namespace InsuranceClaim.Controllers
                 InsuranceContext.Customers.Update(ctems);
                 // UserManager.Update(user);
 
-                if(file!=null)
+                if (file != null)
                 {
                     string imagePath = SaveAgentLogoPath(file);
                     SaveAgentLogo(ctems.Id, imagePath);
                 }
-              
+
 
 
             }

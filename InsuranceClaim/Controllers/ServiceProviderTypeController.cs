@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
 using Insurance.Domain;
 using InsuranceClaim.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 
 namespace InsuranceClaim.Controllers
@@ -88,14 +86,14 @@ namespace InsuranceClaim.Controllers
 
                 var data = InsuranceContext.ServiceProviderTypes.Single(provider.Id);
 
-                if(data!=null)
+                if (data != null)
                 {
                     data.ProviderType = provider.ProviderType;
 
                     InsuranceContext.ServiceProviderTypes.Update(data);
                 }
-            
-             
+
+
                 return RedirectToAction("Index");
             }
             return View();

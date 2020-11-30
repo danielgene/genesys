@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InsuranceClaim.Models
 {
-    public class RiskDetailModel 
-    {  
+    public class RiskDetailModel
+    {
 
         public RiskDetailModel()
         {
@@ -17,7 +12,7 @@ namespace InsuranceClaim.Models
             //ArrearsAmt = 0;
             //PenaltiesAmt = 0;
         }
-           
+
 
         public bool IncludeRadioLicenseCost { get; set; }
 
@@ -27,7 +22,7 @@ namespace InsuranceClaim.Models
         //[Required(ErrorMessage = "Please Enter No Of Cars Covered")]
         //[DefaultValue(1)]
         public int? NoOfCarsCovered { get; set; }
-        [Required(ErrorMessage = "Please Enter Registration No")]    
+        [Required(ErrorMessage = "Please Enter Registration No")]
         public string RegistrationNo { get; set; }
         public int? CustomerId { get; set; }
         [Required(ErrorMessage = "Please Select Vehicle Make")]
@@ -53,7 +48,7 @@ namespace InsuranceClaim.Models
         public DateTime? CoverEndDate { get; set; }
 
         // [Range(3500, int.MaxValue, ErrorMessage = "Minimum sum insured should be 3500.")]
-    
+
         public decimal? SumInsured { get; set; }
         [Required(ErrorMessage = "Please Enter Basic Premium")]
         public decimal? Premium { get; set; }
@@ -138,7 +133,7 @@ namespace InsuranceClaim.Models
         [Required(ErrorMessage = "Please Select Tax Class.")]
         public int TaxClassId { get; set; }
 
-       // [Required(ErrorMessage = "Please Select Manufacturer Year.")]
+        // [Required(ErrorMessage = "Please Select Manufacturer Year.")]
         public string ManufacturerYear { get; set; }
 
         public bool IsPolicyExpire { get; set; }
@@ -172,7 +167,7 @@ namespace InsuranceClaim.Models
 
         public int? RadioLicensePaymentTermId { get; set; }
 
-      
+
         public int? ZinaraLicensePaymentTermId { get; set; }
 
         public string LicenseDeliveryWay { get; set; }
@@ -183,9 +178,9 @@ namespace InsuranceClaim.Models
 
     }
 
-   
 
-    
+
+
 
 
 }

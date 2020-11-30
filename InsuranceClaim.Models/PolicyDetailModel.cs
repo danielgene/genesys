@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace InsuranceClaim.Models
@@ -16,8 +11,8 @@ namespace InsuranceClaim.Models
         //[MaxLength(50,ErrorMessage ="Policy name must be less than 50 characters long.")]
         //public string PolicyName { get; set; }
         //[Display(Name ="Policy Number")]
-        [Required(ErrorMessage ="Please Enter Policy Number.")]
-        [MaxLength(25,ErrorMessage ="Policy number must be less than 25 characters long.")]
+        [Required(ErrorMessage = "Please Enter Policy Number.")]
+        [MaxLength(25, ErrorMessage = "Policy number must be less than 25 characters long.")]
         public string PolicyNumber { get; set; }
         [Display(Name = "Insurer")]
         public int? InsurerId { get; set; }
@@ -28,8 +23,8 @@ namespace InsuranceClaim.Models
         public int PolicyStatusId { get; set; }
         //[Display(Name = "Currency")]
         public int CurrencyId { get; set; }
-        [Display(Name ="Start Date")]
-        [Required(ErrorMessage ="Please Enter Policy Start Date")]        
+        [Display(Name = "Start Date")]
+        [Required(ErrorMessage = "Please Enter Policy Start Date")]
         public DateTime? StartDate { get; set; }
         //[Display(Name = "End Date")]
         [Required(ErrorMessage = "Please Enter Policy End Date.")]

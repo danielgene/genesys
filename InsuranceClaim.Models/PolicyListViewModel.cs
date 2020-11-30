@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InsuranceClaim.Models
 {
@@ -19,7 +16,7 @@ namespace InsuranceClaim.Models
         public decimal TotalPremium { get; set; }
         public int SummaryId { get; set; }
         public DateTime createdOn { get; set; }
-        public bool  IsActive { get; set; }
+        public bool IsActive { get; set; }
         public string CustomerEmail { get; set; }
         public string PolicyStatus { get; set; }
         public string CustomerName { get; set; }
@@ -115,7 +112,7 @@ namespace InsuranceClaim.Models
         public decimal Premium { get; set; }
         public bool isActive { get; set; }
         public string RegistrationNo { get; set; }
-        
+
 
         public string Make { get; set; }
         public string Model { get; set; }

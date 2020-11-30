@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AutoMapper;
 using Insurance.Domain;
 using InsuranceClaim.Models;
-using AutoMapper;
+using System.Collections.Generic;
+using System.Linq;
 namespace Insurance.Service
 {
     public class InsurerService
@@ -16,12 +13,12 @@ namespace Insurance.Service
         public List<InsurerModel> GetInsurers()
         {
             var list = InsuranceContext.PolicyInsurers.All().ToList();
-            var model = Mapper.Map<List<PolicyInsurer>,List<InsurerModel>>(list);
+            var model = Mapper.Map<List<PolicyInsurer>, List<InsurerModel>>(list);
             return model;
         }
 
 
-        
+
 
 
     }

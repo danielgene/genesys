@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using AutoMapper;
 using Insurance.Domain;
 using InsuranceClaim.Models;
-using AutoMapper;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace InsuranceClaim.Controllers
 {
@@ -19,20 +17,20 @@ namespace InsuranceClaim.Controllers
             objList = InsuranceContext.AgentCommissions.All().ToList();
             return View(obj);
 
-    }
-    [HttpPost]
+        }
+        [HttpPost]
         public ActionResult CommissionSave(AgentCommissionModel model)
         {
 
             var data = Mapper.Map<AgentCommissionModel, AgentCommission>(model);
             InsuranceContext.AgentCommissions.Insert(data);
             return RedirectToAction("CommissionList");
-            
+
         }
         [Authorize(Roles = "Staff,Administrator")]
         public ActionResult CommissionList()
         {
-            var db = InsuranceContext.AgentCommissions.All(where:"IsActive='True' Or IsActive is null").ToList();
+            var db = InsuranceContext.AgentCommissions.All(where: "IsActive='True' Or IsActive is null").ToList();
 
             return View(db);
         }
@@ -43,7 +41,7 @@ namespace InsuranceClaim.Controllers
             return View(model);
         }
         [HttpPost]
-        public ActionResult CommissionEdit(AgentCommissionModel model )
+        public ActionResult CommissionEdit(AgentCommissionModel model)
         {
             if (ModelState.IsValid)
             {

@@ -1,14 +1,10 @@
-﻿using System;
+﻿using InsuranceClaim.Models;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
+using System.IO;
 using System.Net;
 using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
-using Insurance.Domain;
-using InsuranceClaim.Models;
-using System.IO;
 
 namespace Insurance.Service
 {
@@ -19,12 +15,12 @@ namespace Insurance.Service
         {
             try
             {
-               // Debug.WriteLine("*********Portnumber*************");
+                // Debug.WriteLine("*********Portnumber*************");
                 var portNumber = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SendEmailPortNo"]);
                 var enableSSL = Convert.ToBoolean(System.Configuration.ConfigurationManager.AppSettings["SendEmailEnableSSL"]);
                 var smtpAddress = Convert.ToString(ConfigurationManager.AppSettings["SendEmailSMTP"]);
 
-              //  Debug.WriteLine("*************from*********");
+                //  Debug.WriteLine("*************from*********");
                 var FromMailAddress = System.Configuration.ConfigurationManager.AppSettings["SendEmailFrom"].ToString();
                 var password = System.Configuration.ConfigurationManager.AppSettings["SendEmailFromPassword"].ToString();
 
@@ -46,20 +42,20 @@ namespace Insurance.Service
 
                 if (pAttachments != null && pAttachments.Count > 0)
                 {
-                   // Debug.WriteLine("*************attachments*********");
+                    // Debug.WriteLine("*************attachments*********");
 
                     if (pAttachments[0] != null)
                     {
                         foreach (var item in pAttachments)
                         {
-                        //    Debug.WriteLine("*************for each*********");
+                            //    Debug.WriteLine("*************for each*********");
                             try
                             {
                                 _mailMessage.Attachments.Add(new System.Net.Mail.Attachment(item.Attachment, item.Name));
                             }
                             catch (Exception ex)
                             {
-                              //  Debug.WriteLine(ex);
+                                //  Debug.WriteLine(ex);
                             }
                         }
 
@@ -73,21 +69,21 @@ namespace Insurance.Service
                 _mailMessage.AlternateViews.Add(htmlView);
                 using (SmtpClient smtp = new SmtpClient(smtpAddress, portNumber))
                 {
-                   // Debug.WriteLine("*************smtp*********");
+                    // Debug.WriteLine("*************smtp*********");
 
                     smtp.Credentials = new NetworkCredential(FromMailAddress, password);
                     smtp.EnableSsl = enableSSL;
                     try
                     {
                         smtp.Send(_mailMessage);
-                       // Debug.WriteLine("*********************");
-                      //  Debug.WriteLine("**************Email Sent*************");
+                        // Debug.WriteLine("*********************");
+                        //  Debug.WriteLine("**************Email Sent*************");
                     }
                     catch (Exception ex)
                     {
-                       // Debug.WriteLine("*********************");
+                        // Debug.WriteLine("*********************");
                         WriteLog(ex.ToString());
-                      //  Debug.WriteLine("*********************");
+                        //  Debug.WriteLine("*********************");
 
                     }
                 }
@@ -196,7 +192,7 @@ namespace Insurance.Service
             {
                 WriteLog(ex.Message);
             }
-        }                   
+        }
 
 
         public void WriteLog(string error)

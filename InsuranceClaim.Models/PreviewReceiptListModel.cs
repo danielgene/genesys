@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
 namespace InsuranceClaim.Models
 {
     public class PreviewReceiptListModel
@@ -42,7 +38,7 @@ namespace InsuranceClaim.Models
 
         public string Currency { get; set; }
 
-        public DateTime? CreatedOn { get; set;}
+        public DateTime? CreatedOn { get; set; }
 
         public decimal ZinaraFee { get; set; }
 

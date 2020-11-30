@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Insurance.Domain;
-using System.Threading.Tasks;
+﻿using Insurance.Domain;
+using System;
 
 namespace Insurance.Service
 {
@@ -21,15 +17,15 @@ namespace Insurance.Service
             {
                 return 0;
             }
-            
+
         }
 
         public PaymentInformation GetById(Int32 Id)
         {
             try
             {
-              
-               return InsuranceContext.PaymentInformations.SingleCustome(Id);
+
+                return InsuranceContext.PaymentInformations.SingleCustome(Id);
             }
             catch (Exception ex)
             {

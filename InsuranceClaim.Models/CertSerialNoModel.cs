@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace InsuranceClaim.Models
 {
@@ -16,7 +12,7 @@ namespace InsuranceClaim.Models
         public int ALMBranchId { get; set; }
         public string BranchName { get; set; }
         public string CreatedOn { get; set; }
-            
+
     }
 
 
@@ -25,7 +21,7 @@ namespace InsuranceClaim.Models
         public string FromDate { get; set; }
 
         public string EndDate { get; set; }
-     
+
         public int? BranchId { get; set; }
 
         public List<CertSerialNoModel> List { get; set; }

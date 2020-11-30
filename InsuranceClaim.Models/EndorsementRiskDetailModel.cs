@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InsuranceClaim.Models
 {
-  public class EndorsementRiskDetailModel
+    public class EndorsementRiskDetailModel
     {
 
         public bool IncludeRadioLicenseCost { get; set; }
@@ -28,7 +24,7 @@ namespace InsuranceClaim.Models
         public string ModelId { get; set; }
         [Required(ErrorMessage = "Please Enter Cubic Capacity")]
         public decimal? CubicCapacity { get; set; }
-       // [Required(ErrorMessage = "Please Enter Vehicle Year")]
+        // [Required(ErrorMessage = "Please Enter Vehicle Year")]
         public int? VehicleYear { get; set; }
         [Required(ErrorMessage = "Please Enter Engine Number")]
         public string EngineNumber { get; set; }
@@ -134,7 +130,7 @@ namespace InsuranceClaim.Models
 
         public string CombinedID { get; set; }
 
-        [Display(Name="Serial Number")]
+        [Display(Name = "Serial Number")]
         public string CertSerialNo { get; set; }
 
         public string ErrorMessage { get; set; }

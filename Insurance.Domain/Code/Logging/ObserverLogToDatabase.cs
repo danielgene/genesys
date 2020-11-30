@@ -1,15 +1,9 @@
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
 namespace SV.Domain.Code
 {
-    
+
     // Writes log events to a database
     // GoF Design Pattern: Observer
-    
+
     public class ObserverLogToDatabase : ILog
     {
         // actual database insert statements are commented out.

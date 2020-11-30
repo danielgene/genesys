@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InsuranceClaim.Models
 {
-   public  class ClaimAdjustmentModel
+    public class ClaimAdjustmentModel
     {
         public int Id { get; set; }
         //[Display(Name = "Amount To Pay")]

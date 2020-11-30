@@ -2,9 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 
 namespace InsuranceClaim.Models
@@ -12,7 +9,7 @@ namespace InsuranceClaim.Models
 {
     public class RegisterClaimViewModel
     {
-    
+
         public int ClaimId { get; set; }
         public int Id { get; set; }
         public string PolicyNumber { get; set; }
@@ -60,8 +57,8 @@ namespace InsuranceClaim.Models
         public List<ChecklistModel> chklist { get; set; }
         public List<RegisterClaimViewModel> chklistDetail { get; set; }
         public string names { get; set; }
-        public List<RiskViewModel> RiskViewModel { get; set; }    
-         
+        public List<RiskViewModel> RiskViewModel { get; set; }
+
         public List<ServiceProviderModel> ProviderList { get; set; }
 
         public List<ClaimRegistrationProviderDetial> ClaimRegistrationProviderList { get; set; }
@@ -157,7 +154,7 @@ namespace InsuranceClaim.Models
         public string ExcessBuyBack { get; set; }
         public string RoadsideAssistance { get; set; }
         public string MedicalExpenses { get; set; }
-       
-    }
 
     }
+
+}

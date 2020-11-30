@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using AutoMapper;
 using Insurance.Domain;
 using InsuranceClaim.Models;
-using AutoMapper;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 
 
 
@@ -22,7 +20,7 @@ namespace InsuranceClaim.Controllers
             InsuranceClaim.Models.ProductModel obj = new InsuranceClaim.Models.ProductModel();
             List<Insurance.Domain.Product> objList = new List<Insurance.Domain.Product>();
             objList = InsuranceContext.Products.All().ToList();
-                
+
             return View(obj);
         }
         [HttpPost]
@@ -35,7 +33,7 @@ namespace InsuranceClaim.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult ProductList()
         {
-            var db = InsuranceContext.Products.All(where:"Active ='True' or Active is null").ToList();
+            var db = InsuranceContext.Products.All(where: "Active ='True' or Active is null").ToList();
 
 
             return View(db);
@@ -64,7 +62,7 @@ namespace InsuranceClaim.Controllers
 
             return RedirectToAction("ProductList");
         }
-        public ActionResult DeleteProduct(int Id )
+        public ActionResult DeleteProduct(int Id)
         {
             string query = $"update Product set Active=0 where Id={Id}";
             InsuranceContext.Products.Execute(query);

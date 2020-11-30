@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InsuranceClaim.Models
 {
-    
+
     public class DomesticRiskDetailModel
     {
 
@@ -32,7 +28,7 @@ namespace InsuranceClaim.Models
         public string RiskAddress { get; set; }
         public int PaymentTermId { get; set; }
         public int PaymentTypeId { get; set; }
-     
+
         public decimal Rate { get; set; }
         public string Notes { get; set; }
         public decimal BasicPremium { get; set; }

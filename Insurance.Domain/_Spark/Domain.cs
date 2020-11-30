@@ -1,9 +1,5 @@
 
 using System;
-using System.Linq;
-using System.Text;
-using System.Data;
-using System.Collections.Generic;
 
 namespace Insurance.Domain
 {
@@ -196,7 +192,7 @@ namespace Insurance.Domain
         public int Id { get; set; }
         public string PartnerName { get; set; }
         public bool? Status { get; set; }
-      
+
     }
 
 
@@ -638,7 +634,7 @@ namespace Insurance.Domain
 
     }
 
-    
+
     public partial class VehicleModel : Entity<VehicleModel>
     {
         public VehicleModel() { }
@@ -792,7 +788,7 @@ namespace Insurance.Domain
         public string PaymentType { get; set; }
         public Guid InvoiceId { get; set; }
         public string InvoiceNumber { get; set; }
-  
+
         public DateTime CreatedOn { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? ModifiedOn { get; set; }
@@ -841,7 +837,7 @@ namespace Insurance.Domain
 
         public int Id { get; set; }
         public int SummaryDetailId { get; set; }
-        public int VehicleDetailsId { get; set; }       
+        public int VehicleDetailsId { get; set; }
         public DateTime? CreatedOn { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? ModifiedOn { get; set; }
@@ -1080,7 +1076,7 @@ namespace Insurance.Domain
         public LogDetailTbl(bool defaults) : base(defaults) { }
         public int Id { get; set; }
         public string Request { get; set; }
-        public string Response { get; set; }  
+        public string Response { get; set; }
         public string Method { get; set; }
         public string VRN { get; set; }
         public string BranchId { get; set; }
@@ -1872,7 +1868,7 @@ namespace Insurance.Domain
         public string VRN { get; set; }
         public string CertSerialNo { get; set; }
         public string PolicyType { get; set; }
-       // public int EndorsmentPolicyId { get; set; }
+        // public int EndorsmentPolicyId { get; set; }
 
         public int EndorsmentVehicleId { get; set; }
 

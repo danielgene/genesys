@@ -1,11 +1,9 @@
-﻿using Insurance.Domain;
-using System;
+﻿using AutoMapper;
+using Insurance.Domain;
+using InsuranceClaim.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using InsuranceClaim.Models;
-using AutoMapper;
 
 namespace InsuranceClaim.Controllers
 {
@@ -29,17 +27,17 @@ namespace InsuranceClaim.Controllers
         [Authorize(Roles = "Staff,Administrator")]
         public ActionResult PolicyInsurerList()
         {
-            var db = InsuranceContext.PolicyInsurers.All(where:"IsActive = 'True' or IsActive is null").ToList();
+            var db = InsuranceContext.PolicyInsurers.All(where: "IsActive = 'True' or IsActive is null").ToList();
 
             return View(db);
         }
         public ActionResult EditPolicy(int Id)
         {
             var record = InsuranceContext.PolicyInsurers.All(where: $"Id ={Id}").FirstOrDefault();
-            var data = Mapper.Map<PolicyInsurer,PolicyInsurerModel>(record);
+            var data = Mapper.Map<PolicyInsurer, PolicyInsurerModel>(record);
             return View(data);
         }
-            [HttpPost]
+        [HttpPost]
         public ActionResult EditPolicy(PolicyInsurerModel model)
         {
 
@@ -51,7 +49,7 @@ namespace InsuranceClaim.Controllers
             }
             return RedirectToAction("PolicyInsurerList");
         }
-        public ActionResult DeletePolicy( int Id)
+        public ActionResult DeletePolicy(int Id)
         {
             string query = $"update PolicyInsurer set IsActive = 0 where Id = {Id}";
             InsuranceContext.PolicyInsurers.Execute(query);

@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
-using static InsuranceClaim.Controllers.CustomerRegistrationController;
 
 namespace InsuranceClaim.Controllers
 {
@@ -109,7 +108,7 @@ namespace InsuranceClaim.Controllers
             var query = "select Customer. *, AspNetUsers.Email  from Customer ";
             query += "   join AspNetUsers on Customer.UserID = AspNetUsers.Id ";
             query += "  join AspNetUserRoles  on AspNetUserRoles.UserId = AspNetUsers.Id ";
-            query += " where AspNetUserRoles.RoleId ='" + _staff + "'  and CreatedBy=" + loggedCustomerId +" and (IsActive is null or IsActive=1) ";
+            query += " where AspNetUserRoles.RoleId ='" + _staff + "'  and CreatedBy=" + loggedCustomerId + " and (IsActive is null or IsActive=1) ";
 
 
             //      var user1 = InsuranceContext.Query(query).Select
@@ -131,14 +130,14 @@ namespace InsuranceClaim.Controllers
                 IsWelcomeNoteSent = x.IsWelcomeNoteSent,
                 IsPolicyDocSent = x.IsPolicyDocSent,
                 IsLicenseDiskNeeded = x.IsLicenseDiskNeeded,
-                IsOTPConfirmed = x.IsOTPConfirmed==null ,
+                IsOTPConfirmed = x.IsOTPConfirmed == null,
                 CreatedBy = x.CreatedBy,
                 ModifiedOn = x.ModifiedOn,
                 ModifiedBy = x.ModifiedBy,
-                IsActive = x.IsActive==null ? false : Convert.ToBoolean(x.IsActive),
+                IsActive = x.IsActive == null ? false : Convert.ToBoolean(x.IsActive),
                 CountryCode = x.Countrycode,
                 PhoneNumber = x.PhoneNumber,
-                IsCustomEmail = x.IsCustomEmail==null ? false : Convert.ToBoolean(x.IsCustomEmail),
+                IsCustomEmail = x.IsCustomEmail == null ? false : Convert.ToBoolean(x.IsCustomEmail),
                 EmailAddress = x.Email,
                 // CompanyName = x.CompanyName,
                 // CompanyEmail = x.CompanyEmail,
@@ -196,7 +195,7 @@ namespace InsuranceClaim.Controllers
 
             if (userLoggedin)
             {
-                 userid = System.Web.HttpContext.Current.User.Identity.GetUserId();
+                userid = System.Web.HttpContext.Current.User.Identity.GetUserId();
                 // var role = UserManager.GetRoles(userid).FirstOrDefault();
                 //if (role != "SuperAdmin")
                 //{
@@ -209,7 +208,7 @@ namespace InsuranceClaim.Controllers
             }
 
             CustomerModel obj = new CustomerModel();
-         //   List<IdentityRole> roles = roleManager.Roles.ToList();
+            //   List<IdentityRole> roles = roleManager.Roles.ToList();
 
 
 
@@ -217,7 +216,7 @@ namespace InsuranceClaim.Controllers
 
             if (customer != null)
             {
-                ViewBag.Branches = InsuranceContext.Branches.All(where: "id in ("+customer.AgentBranch+")");
+                ViewBag.Branches = InsuranceContext.Branches.All(where: "id in (" + customer.AgentBranch + ")");
             }
             else
             {
@@ -348,7 +347,7 @@ namespace InsuranceClaim.Controllers
 
             if (userLoggedin)
             {
-                 userid = System.Web.HttpContext.Current.User.Identity.GetUserId();
+                userid = System.Web.HttpContext.Current.User.Identity.GetUserId();
                 // var role = UserManager.GetRoles(userid).FirstOrDefault();
                 //if (role != "SuperAdmin")
                 //{
@@ -381,7 +380,7 @@ namespace InsuranceClaim.Controllers
                 //    var branchs = InsuranceContext.Branches.Single(data.BranchId) == null ? "" : InsuranceContext.Branches.Single(data.BranchId).BranchName;
 
 
-               // ViewBag.Branches= InsuranceContext.Branches.All(where: "Id=" + data.BranchId);
+                // ViewBag.Branches= InsuranceContext.Branches.All(where: "Id=" + data.BranchId);
 
 
                 var customer = InsuranceContext.Customers.Single(where: "UserID='" + userid + "'");
@@ -390,7 +389,7 @@ namespace InsuranceClaim.Controllers
                 {
                     ViewBag.Branches = InsuranceContext.Branches.All(where: "id in (" + customer.AgentBranch + ")");
                 }
-                
+
 
 
 
@@ -421,7 +420,7 @@ namespace InsuranceClaim.Controllers
             }
 
 
-          
+
 
 
 
@@ -450,7 +449,7 @@ namespace InsuranceClaim.Controllers
                 ViewBag.Branches = InsuranceContext.Branches.All();
 
 
-               
+
 
 
 

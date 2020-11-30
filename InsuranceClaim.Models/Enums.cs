@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace InsuranceClaim.Models
+﻿namespace InsuranceClaim.Models
 {
     public enum eCoverType
     {
@@ -25,9 +19,9 @@ namespace InsuranceClaim.Models
     {
         Annual = 1,
         //Monthly = 2,
-      //  Quarterly = 3,
+        //  Quarterly = 3,
         Termly = 4,
-        Termly_5 =5,
+        Termly_5 = 5,
         Termly_6 = 6,
         Termly_7 = 7,
         Termly_8 = 8,
@@ -79,15 +73,15 @@ namespace InsuranceClaim.Models
         ecocash = 2,
         Zimswitch = 6,
         Cash = 1,
-         PayLater = 6,
-         PayNow = 3,
+        PayLater = 6,
+        PayNow = 3,
         //PayLater = 1008
     }
 
     public enum currencyType
     {
         USD = 1,
-        RTGS=6
+        RTGS = 6
     }
 
     public enum PolicyType
@@ -106,10 +100,10 @@ namespace InsuranceClaim.Models
 
     public enum ALMBranch
     {
-        GeneCallCentre=6
+        GeneCallCentre = 6
     }
 
-   
+
 
 
 }

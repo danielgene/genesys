@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace InsuranceClaim.Models
 {
@@ -25,7 +20,7 @@ namespace InsuranceClaim.Models
         [System.Web.Mvc.Compare("NewPassword", ErrorMessage = "The NewPassword and ConfirmPassword Password do not Match.")]
         public string ConfirmPassword { get; set; }
         public string ErrorMsg { get; set; }
-        
-           
+
+
     }
 }

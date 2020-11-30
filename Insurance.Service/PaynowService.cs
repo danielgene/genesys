@@ -1,7 +1,6 @@
 ﻿using Insurance.Domain;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 using System.Net.Http;
 using System.Security.Cryptography;
@@ -17,8 +16,8 @@ namespace Insurance.Service
 
         private static readonly HttpClient client = new HttpClient();
         // sendbox
-       // private static String IntegrationID = "5623";
-       // private static string IntegrationKey = "7c1cd190-5046-4292-806a-0dbb85b949f6";
+        // private static String IntegrationID = "5623";
+        // private static string IntegrationKey = "7c1cd190-5046-4292-806a-0dbb85b949f6";
 
         // live
         private static String IntegrationID = "6059";
@@ -37,7 +36,7 @@ namespace Insurance.Service
             string PaymentId = "PAYNOW-" + Guid.NewGuid().ToString();
             HttpContext.Current.Session["PaymentId"] = PaymentId;
 
-          //  authemail = "constantine@gene-insure.com";
+            //  authemail = "constantine@gene-insure.com";
             if (isRenew)
             {
                 var values = new Dictionary<string, string>

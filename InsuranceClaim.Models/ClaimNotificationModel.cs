@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 
 namespace InsuranceClaim.Models
 {
-  public  class ClaimNotificationModel
+    public class ClaimNotificationModel
     {
-        public int Id { get; set; }  
+        public int Id { get; set; }
         [Required(ErrorMessage = "Please Enter Policy Number")]
         [Display(Name = "Policy Number")]
         public string PolicyNumber { get; set; }
@@ -45,13 +41,13 @@ namespace InsuranceClaim.Models
         public bool? ThirdPartyInvolvement { get; set; }
         //public int CreatedBy { get; set; }
 
-       public string RenewPolicyNumber { get; set; }
+        public string RenewPolicyNumber { get; set; }
 
         public int CreatedBy { get; set; }
         public DateTime CreatedOn { get; set; }
         public bool? IsDeleted { get; set; }
         public bool? IsRegistered { get; set; }
-        
+
         public DateTime? ModifiedOn { get; set; }
         public int? ModifiedBy { get; set; }
         public bool IsExists { get; set; }

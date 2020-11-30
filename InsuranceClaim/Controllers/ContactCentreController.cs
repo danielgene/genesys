@@ -5,7 +5,6 @@ using InsuranceClaim.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace InsuranceClaim.Controllers
@@ -21,7 +20,7 @@ namespace InsuranceClaim.Controllers
         public ActionResult RiskDetail(int? id = 1)
         {
             // summaryDetailId: it's represent to Qutation edit
-         
+
             if (Session["SummaryDetailId"] != null)
             {
                 SetValueIntoSession(Convert.ToInt32(Session["SummaryDetailId"]));
@@ -53,7 +52,8 @@ namespace InsuranceClaim.Controllers
 
             var data1 = (from p in InsuranceContext.BusinessSources.All().ToList()
                          join f in InsuranceContext.SourceDetails.All().ToList()
-                         on p.Id equals f.BusinessId where f.IsDeleted == true
+                         on p.Id equals f.BusinessId
+                         where f.IsDeleted == true
                          select new
                          {
                              Value = f.Id,
@@ -72,7 +72,7 @@ namespace InsuranceClaim.Controllers
             //ViewBag.Sources = InsuranceContext.BusinessSources.All();
             ViewBag.Currencies = InsuranceContext.Currencies.All(where: $"IsActive = 'True'");
             // viewModel.CurrencyId = 7; // default "RTGS$" selected // for test server
-             viewModel.CurrencyId = 6; // default "RTGS$" selected // for live server
+            viewModel.CurrencyId = 6; // default "RTGS$" selected // for live server
             ViewBag.Makers = makers;
 
             if (makers.Count > 0)
@@ -99,23 +99,23 @@ namespace InsuranceClaim.Controllers
 
 
             int RadioLicenseCosts = 0;
-          // int RadioLicenseCosts = Convert.ToInt32(InsuranceContext.Settings.All().Where(x => x.keyname == "RadioLicenseCost").Select(x => x.value).FirstOrDefault());
+            // int RadioLicenseCosts = Convert.ToInt32(InsuranceContext.Settings.All().Where(x => x.keyname == "RadioLicenseCost").Select(x => x.value).FirstOrDefault());
             var PolicyData = (PolicyDetail)Session["PolicyData"];
             //Id is policyid from Policy detail table
-          //  var viewModel = new RiskDetailModel();
-           
-           
+            //  var viewModel = new RiskDetailModel();
+
+
 
             viewModel.VehicleUsage = 0;
             viewModel.NumberofPersons = 0;
             viewModel.AddThirdPartyAmount = 0.00m;
             viewModel.RadioLicenseCost = Convert.ToDecimal(RadioLicenseCosts);
-           
-          
-        
+
+
+
             viewModel.isUpdate = false;
             //TempData["Policy"] = service.GetPolicy(id);
-            
+
 
             viewModel.NoOfCarsCovered = 1;
             if (Session["VehicleDetails"] != null)
@@ -197,8 +197,8 @@ namespace InsuranceClaim.Controllers
                         viewModel.CurrencyId = data.CurrencyId;
 
                         viewModel.isUpdate = true; //commented on "31 oct"
-                        //viewModel.isUpdate = false; // 02_feb_2019
-                 
+                                                   //viewModel.isUpdate = false; // 02_feb_2019
+
                         viewModel.vehicleindex = Convert.ToInt32(id);
                         viewModel.TaxClassId = data.TaxClassId;
 
@@ -225,7 +225,7 @@ namespace InsuranceClaim.Controllers
             var vehicle = InsuranceContext.VehicleDetails.Single(SummaryVehicleDetails[0].VehicleDetailsId);
             var policy = InsuranceContext.PolicyDetails.Single(vehicle.PolicyId);
             var product = InsuranceContext.Products.Single(Convert.ToInt32(policy.PolicyName));
-  
+
 
             Session["PolicyData"] = policy;
 
@@ -236,13 +236,13 @@ namespace InsuranceClaim.Controllers
                 // var _vehicle = InsuranceContext.VehicleDetails.Single(item.VehicleDetailsId); after renew qutation
                 var _vehicle = InsuranceContext.VehicleDetails.Single(where: "id=" + item.VehicleDetailsId + " and IsActive=1");
 
-                if(_vehicle!=null)
+                if (_vehicle != null)
                 {
                     RiskDetailModel riskDetail = Mapper.Map<VehicleDetail, RiskDetailModel>(_vehicle);
                     listRiskDetail.Add(riskDetail);
                 }
-                
-                
+
+
             }
             Session["VehicleDetails"] = listRiskDetail;
 
@@ -265,7 +265,7 @@ namespace InsuranceClaim.Controllers
                 RadioLicenseCosts = Convert.ToInt32(InsuranceContext.Settings.All().Where(x => x.keyname == "RadioLicenseCostCommercialvehicles").Select(x => x.value).FirstOrDefault());
             else
                 RadioLicenseCosts = Convert.ToInt32(InsuranceContext.Settings.All().Where(x => x.keyname == "RadioLicenseCost").Select(x => x.value).FirstOrDefault());
-            
+
 
 
             //if (id == (int)ePaymentTerm.Annual)
@@ -305,7 +305,7 @@ namespace InsuranceClaim.Controllers
                 case 10:
                 case 11:
                     RadioLicenseCosts = RadioLicenseCosts;
-                    break;        
+                    break;
             }
 
 

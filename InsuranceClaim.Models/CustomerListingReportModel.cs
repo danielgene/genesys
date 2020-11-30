@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InsuranceClaim.Models
 {
-   public class CustomerListingReportModel
+    public class CustomerListingReportModel
     {
 
         public string FirstName { get; set; }
@@ -24,7 +21,7 @@ namespace InsuranceClaim.Models
         public string VehicleUsage { get; set; }
         public string PaymentTerm { get; set; }
         public string PaymentType { get; set; }
-    
+
 
     }
     public class ListCustomerListingReport

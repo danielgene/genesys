@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace InsuranceClaim.Models
 {
@@ -16,7 +11,7 @@ namespace InsuranceClaim.Models
         public string NameOnCard { get; set; }
         [Required(ErrorMessage = "Please Enter Expiry Date ")]
         public string ExpiryDate { get; set; }
-        [Required(ErrorMessage ="Please Enter CVC")]
+        [Required(ErrorMessage = "Please Enter CVC")]
         public string CVC { get; set; }
         public int SummaryDetailId { get; set; }
         public int? EndorsementSummaryId { get; set; }

@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InsuranceClaim.Models
 {
-   public class ReceiptModuleHistoryModel
+    public class ReceiptModuleHistoryModel
     {
         public int Id { get; set; }
         public int PolicyId { get; set; }
@@ -22,7 +18,7 @@ namespace InsuranceClaim.Models
     }
 
 
-    public  class ReceiptDeliveryModule
+    public class ReceiptDeliveryModule
     {
         public string customerFirstName { get; set; }
         public string customerLastName { get; set; }

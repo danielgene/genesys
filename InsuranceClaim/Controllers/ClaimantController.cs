@@ -1,16 +1,14 @@
-﻿using System;
+﻿using AutoMapper;
+using Insurance.Domain;
+using Insurance.Service;
+using InsuranceClaim.Models;
+using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using InsuranceClaim.Models;
-using AutoMapper;
-using Insurance.Domain;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Insurance.Service;
-using System.IO;
-using System.Globalization;
 
 namespace InsuranceClaim.Controllers
 {
@@ -34,8 +32,8 @@ namespace InsuranceClaim.Controllers
         public ActionResult SaveClaimant(ClaimNotificationModel model)
         {
             Insurance.Service.EmailService log = new Insurance.Service.EmailService();
-            
-           
+
+
 
 
             if (ModelState.IsValid)
@@ -44,54 +42,54 @@ namespace InsuranceClaim.Controllers
                 string userid = "";
 
 
-              
-                    if (userLoggedin)
+
+                if (userLoggedin)
+                {
+                    userid = System.Web.HttpContext.Current.User.Identity.GetUserId();
+                    var customer = InsuranceContext.Customers.Single(where: $"UserId ='{userid}'");
+                    var dbModel = Mapper.Map<ClaimNotificationModel, ClaimNotification>(model);
+                    var policy = model.PolicyNumber;
+                    var Detailofpolicy = InsuranceContext.PolicyDetails.Single(where: $"PolicyNumber='{policy}'");
+
+                    // log.WriteLog("Detailofpolicy :");
+                    var vehicalDetails = new VehicleDetail();
+
+                    if (Detailofpolicy == null)
                     {
-                        userid = System.Web.HttpContext.Current.User.Identity.GetUserId();
-                        var customer = InsuranceContext.Customers.Single(where: $"UserId ='{userid}'");
-                        var dbModel = Mapper.Map<ClaimNotificationModel, ClaimNotification>(model);
-                        var policy = model.PolicyNumber;
-                        var Detailofpolicy = InsuranceContext.PolicyDetails.Single(where: $"PolicyNumber='{policy}'");
-
-                       // log.WriteLog("Detailofpolicy :");
-                        var vehicalDetails = new VehicleDetail();
-
-                        if (Detailofpolicy == null)
-                        {
-                            vehicalDetails = InsuranceContext.VehicleDetails.Single(where: $"RenewPolicyNumber='{policy}'");
-
-                            if (vehicalDetails != null)
-                            {
-                                Detailofpolicy = InsuranceContext.PolicyDetails.Single(vehicalDetails.PolicyId);
-                            }
-                        }
-
-                        //  var vehicalDetails = InsuranceContext.VehicleDetails.Single(where: $"PolicyId='{Detailofpolicy.Id}' and RegistrationNo='" + model.RegistrationNo + "'");
+                        vehicalDetails = InsuranceContext.VehicleDetails.Single(where: $"RenewPolicyNumber='{policy}'");
 
                         if (vehicalDetails != null)
                         {
-                            dbModel.VehicleId = vehicalDetails.Id;
+                            Detailofpolicy = InsuranceContext.PolicyDetails.Single(vehicalDetails.PolicyId);
                         }
-                        dbModel.PolicyId = Detailofpolicy.Id;
-                        dbModel.CreatedBy = customer.Id;
-                        dbModel.CreatedOn = DateTime.Now;
-                        dbModel.IsDeleted = true;
-                        dbModel.IsRegistered = false;
-                        dbModel.PolicyNumber = Detailofpolicy.PolicyNumber;
-
-       
-
-                        dbModel.DateOfLoss = model.DateOfLoss;
-
-
-
-                       // log.WriteLog("DateOfLoss :" + model.DateOfLoss);
-
-                        InsuranceContext.ClaimNotifications.Insert(dbModel);
                     }
-                
 
-               
+                    //  var vehicalDetails = InsuranceContext.VehicleDetails.Single(where: $"PolicyId='{Detailofpolicy.Id}' and RegistrationNo='" + model.RegistrationNo + "'");
+
+                    if (vehicalDetails != null)
+                    {
+                        dbModel.VehicleId = vehicalDetails.Id;
+                    }
+                    dbModel.PolicyId = Detailofpolicy.Id;
+                    dbModel.CreatedBy = customer.Id;
+                    dbModel.CreatedOn = DateTime.Now;
+                    dbModel.IsDeleted = true;
+                    dbModel.IsRegistered = false;
+                    dbModel.PolicyNumber = Detailofpolicy.PolicyNumber;
+
+
+
+                    dbModel.DateOfLoss = model.DateOfLoss;
+
+
+
+                    // log.WriteLog("DateOfLoss :" + model.DateOfLoss);
+
+                    InsuranceContext.ClaimNotifications.Insert(dbModel);
+                }
+
+
+
 
                 return RedirectToAction("ClaimantList");
 
@@ -147,10 +145,10 @@ namespace InsuranceClaim.Controllers
                            ThirdPartyDamageValue = j.ThirdPartyDamageValue,
                            Id = j.Id,
                            IsExists = rt == null ? false : true,
-                           Currency = _summaryDetailService.GetCurrencyName(currenyList, rt==null? 6: rt.CurrencyId),
+                           Currency = _summaryDetailService.GetCurrencyName(currenyList, rt == null ? 6 : rt.CurrencyId),
 
                        }
-                     ).OrderByDescending(c=>c.Id).ToList();
+                     ).OrderByDescending(c => c.Id).ToList();
 
             return View(objList);
         }
@@ -224,14 +222,14 @@ namespace InsuranceClaim.Controllers
 
             }).FirstOrDefault();
 
-            if(VehicleDetail==null)
+            if (VehicleDetail == null)
             {
                 query = "";
-                 query = "select VehicleDetail.* from VehicleDetail join PolicyDetail on VehicleDetail.PolicyId = PolicyDetail.Id";
+                query = "select VehicleDetail.* from VehicleDetail join PolicyDetail on VehicleDetail.PolicyId = PolicyDetail.Id";
                 query += " where VehicleDetail.IsActive=1 and RenewPolicyNumber = '" + PolicyNumber + "' and VehicleDetail.RegistrationNo = '" + ClaimDetail.RegistrationNo + "'";
 
 
-                 VehicleDetail = InsuranceContext.Query(query).Select(x => new VehicleDetail()
+                VehicleDetail = InsuranceContext.Query(query).Select(x => new VehicleDetail()
                 {
                     Id = x.Id,
                     MakeId = x.MakeId,
@@ -288,7 +286,7 @@ namespace InsuranceClaim.Controllers
                     var ClaimDetail = InsuranceContext.ClaimNotifications.All().SingleOrDefault(p => p.Id == id);
                     var Policyid = PolicyDetail.Id;
                     var CustomerId = PolicyDetail.CustomerId;
-                    
+
                     var VehicleDetail = InsuranceContext.VehicleDetails.All().Where(p => p.RegistrationNo == ClaimDetail.RegistrationNo && p.PolicyId == Policyid).ToList();
 
 
@@ -944,7 +942,7 @@ namespace InsuranceClaim.Controllers
 
             //string[] filePaths = Directory.GetFiles(Server.MapPath("~/Documents/" + CustomerId + "/" + PolicyNumber + "/" + vehicleId + "/"));
 
-         
+
             var FileList = InsuranceContext.ClaimDocuments.All(where: $"PolicyNumber='{PolicyNumber}' and ClaimNumber='{ClaimNumber}'").ToList();
             var list = new List<InsuranceClaim.Models.ClaimDocumentModel>();
             foreach (var item in FileList)
@@ -1089,7 +1087,7 @@ namespace InsuranceClaim.Controllers
             //              select new ClaimNotificationModel
             //              {
             //                  PolicyNumber = Policylist.PolicyNumber,
-                              
+
             //                  VRNNumber = Vehicle.RegistrationNo,
             //                  VehicleId = Vehicle.Id,
             //                  PolicyId = Vehicle.PolicyId,
@@ -1115,7 +1113,7 @@ namespace InsuranceClaim.Controllers
 
             var policyList = new List<ClaimNotificationModel>();
 
-            foreach(var item in list)
+            foreach (var item in list)
             {
                 ClaimNotificationModel model = new ClaimNotificationModel();
                 model = item;
@@ -1153,13 +1151,13 @@ namespace InsuranceClaim.Controllers
                     detail = InsuranceContext.PolicyDetails.Single(where: $"PolicyNumber='{policyNumber}'");
                 }
 
-                if(detail==null)
+                if (detail == null)
                 {
                     // to get renew policy details
                     var vehicle = InsuranceContext.VehicleDetails.Single(where: $"RenewPolicyNumber = '{policyNumber}'");
                     detail = InsuranceContext.PolicyDetails.Single(where: $"Id='{vehicle.PolicyId}'");
 
-                    if(detail!=null)
+                    if (detail != null)
                     {
                         var customerdetail = InsuranceContext.Customers.Single(where: $"Id='{detail.CustomerId}'");
                         customerName = customerdetail.FirstName + " " + customerdetail.LastName;
@@ -1175,7 +1173,7 @@ namespace InsuranceClaim.Controllers
 
                         return Json(model, JsonRequestBehavior.AllowGet);
                     }
-                
+
                 }
 
 

@@ -1,12 +1,11 @@
-﻿using Insurance.Domain;
+﻿using AutoMapper;
+using Insurance.Domain;
+using InsuranceClaim.Models;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using AutoMapper;
-using InsuranceClaim.Models;
-using RestSharp;
 
 namespace Insurance.Service
 {
@@ -21,7 +20,7 @@ namespace Insurance.Service
         public List<ClsVehicleModel> GetModel(string makeCode)
         {
             var list = InsuranceContext.VehicleModels.All(where: $"MakeCode='{makeCode}'").ToList();
-            
+
             var map = Mapper.Map<List<VehicleModel>, List<ClsVehicleModel>>(list);
             return map;
 
@@ -96,14 +95,14 @@ namespace Insurance.Service
 
             int vehicleTypeId = 0;
 
-            if(product!=null)
+            if (product != null)
             {
                 vehicleTypeId = product.VehicleTypeId;
             }
 
             var list = InsuranceContext.VehicleTaxClasses.All(where: $"VehicleType='{vehicleTypeId}'").ToList();
 
-         //  var list = InsuranceContext.VehicleTaxClasses.All(where: $"VehicleUsageId='{VehicleType}'").ToList();
+            //  var list = InsuranceContext.VehicleTaxClasses.All(where: $"VehicleUsageId='{VehicleType}'").ToList();
 
 
             var map = Mapper.Map<List<VehicleTaxClass>, List<VehicleTaxClassModel>>(list);
@@ -156,7 +155,7 @@ namespace Insurance.Service
 
         public List<RiskCoverModel> Domestic_RiskCovers(int ProductId)
         {
-            return InsuranceContext.Domestic_RiskCovers.All(where: $"ProductId='{ProductId}'").ToList().Select(x => new RiskCoverModel { Id = x.Id, RiskCover = x.CoverName }).ToList();     
+            return InsuranceContext.Domestic_RiskCovers.All(where: $"ProductId='{ProductId}'").ToList().Select(x => new RiskCoverModel { Id = x.Id, RiskCover = x.CoverName }).ToList();
         }
 
         public Domestic_RiskItem Domestic_RiskItem(int riskId)
@@ -164,7 +163,7 @@ namespace Insurance.Service
             return InsuranceContext.Domestic_RiskItems.Single(riskId);
         }
 
-      
+
         public List<VehicleTaxClass> GetAllTaxClasses()
         {
             return InsuranceContext.VehicleTaxClasses.All().ToList();
@@ -211,12 +210,12 @@ namespace Insurance.Service
         {
             string msg = "";
 
-            if (model.IncludeLicenseFee == true && (model.ZinaraLicensePaymentTermId == 0 || model.ZinaraLicensePaymentTermId==null))
+            if (model.IncludeLicenseFee == true && (model.ZinaraLicensePaymentTermId == 0 || model.ZinaraLicensePaymentTermId == null))
             {
                 msg = "Please select payment term of vehicle license.";
             }
 
-            if (model.IncludeRadioLicenseCost == true && (model.RadioLicensePaymentTermId == 0 || model.RadioLicensePaymentTermId==null))
+            if (model.IncludeRadioLicenseCost == true && (model.RadioLicensePaymentTermId == 0 || model.RadioLicensePaymentTermId == null))
             {
                 msg = "Please select payment term of radio license.";
             }

@@ -1,12 +1,8 @@
 using System.Net.Mail;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace SV.Domain.Code
 {
-    
+
     // sends log events via email.
     // ** Design Pattern: Observer
 
@@ -19,18 +15,18 @@ namespace SV.Domain.Code
         private SmtpClient smtpClient;
 
         public ObserverLogToEmail(string from, string to, string subject, string body, SmtpClient smtpClient)
-		{
+        {
             this.from = from;
             this.to = to;
             this.subject = subject;
             this.body = body;
-            
+
             this.smtpClient = smtpClient;
-		}
+        }
 
         #region ILog Members
 
-        
+
         // sends a log request via email.
         // actual email 'Send' calls are commented out.
         // uncomment if you have the proper email privileges.

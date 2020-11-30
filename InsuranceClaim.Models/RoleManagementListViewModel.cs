@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace InsuranceClaim.Models
 {
     public class RoleManagementListViewModel
     {
         public List<Microsoft.AspNet.Identity.EntityFramework.IdentityRole> RoleList { get; set; }
-        
+
     }
 
     public class RoleViewModel

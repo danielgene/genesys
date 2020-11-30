@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Insurance.Domain;
+﻿using Insurance.Domain;
 using InsuranceClaim.Models;
-using System.Configuration;
+using System;
+using System.Linq;
 
 
 namespace Insurance.Service
